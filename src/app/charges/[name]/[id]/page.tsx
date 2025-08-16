@@ -1,6 +1,9 @@
 "use client";
 
+import { GlobeIcon } from "@/assets/icons";
+import { Select } from "@/components/FormElements/select";
 import AppBar from "@/components/mobile/app_bar/AppBar";
+import CircleIcon from "@/components/mobile/CircleIcon";
 import { useRouter } from "next/navigation";
 // app/(dashboard)/charge/apple/page.tsx
 // Design-only: iOS-style bottom sheet opened by "Learn more"
@@ -65,9 +68,15 @@ export default function AppleChargePage() {
         </div>
 
         <div className="relative">
-          <SelectField
-            labelIcon={<Flag country="us" />}
-            label="United States"
+          <Select
+            label="Select Country"
+            items={[
+              { label: "United States", value: "USA" },
+              { label: "United Kingdom", value: "UK" },
+              { label: "Canada", value: "Canada" },
+            ]}
+            defaultValue="USA"
+            prefixIcon={<GlobeIcon />}
           />
         </div>
       </div>
@@ -75,7 +84,6 @@ export default function AppleChargePage() {
       {/* Choose value */}
       <section className="mt-6 space-y-3">
         <h3 className="text-base font-semibold">Choose Card Value</h3>
-
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           <ValueButton primary="$5" secondary="240 MRU" />
           <ValueButton primary="$10" secondary="460 MRU" />
@@ -198,16 +206,6 @@ export default function AppleChargePage() {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-/* ===================== small atoms (design only) ===================== */
-
-function CircleIcon({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex h-9 w-9 items-center justify-center rounded-full border bg-[#F0F0F3] shadow-sm">
-      {children}
     </div>
   );
 }

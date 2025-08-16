@@ -19,7 +19,7 @@
     scrollbar-width: none; /* Firefox */
   }
 
-   .custom-scrollbar {
+  .custom-scrollbar {
     @apply overflow-auto;
   }
 
@@ -35,7 +35,6 @@
     @apply relative flex-1 rounded-full bg-neutral-200/40 dark:bg-stroke-dark;
   }
 
-  
   .chat-height {
     @apply h-[calc(100vh_-_8.125rem)] lg:h-[calc(100vh_-_5.625rem)];
   }
@@ -86,7 +85,15 @@
 .apexcharts-legend-series {
   @apply !inline-flex gap-1.5;
 }
-
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  @apply text-[#000]; /* Tailwind color class */
+}
 .apexcharts-tooltip.apexcharts-theme-light {
   @apply !rounded-[7px] !text-base !font-medium !text-dark !shadow-card-2 dark:!border-dark-3 dark:!bg-gray-dark dark:!text-white;
 }
