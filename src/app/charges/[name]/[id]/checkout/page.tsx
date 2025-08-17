@@ -4,18 +4,14 @@
 import { useState } from "react";
 import PhoneNumberSelect from "@/components/mobile/PhoneNumberSelect";
 import AppBar from "@/components/mobile/app_bar/AppBar";
+import PaymentMethodCards from "./PaymentMethodCards";
 
 export default function ConfirmPaymentPage() {
   const [phoneId, setPhoneId] = useState<string | null>(null);
 
-  const numbers = [
-    { id: "33223301", label: "33 22 33 01" },
-    { id: "33556677", label: "33 55 66 77" },
-  ];
   return (
     <div className="mx-auto w-full max-w-xl sm:p-6">
       {/* Header */}
-
       <AppBar title="Confirm payment"></AppBar>
       {/* Product summary row */}
       <div className="mb-4 flex items-center gap-3">
@@ -29,42 +25,20 @@ export default function ConfirmPaymentPage() {
           </div>
         </div>
       </div>
-
-      {/* Price breakdown */}
       <div className="bg-card text-card-foreground divide-y rounded-2xl border">
         <SummaryRow label="Subtotal" value="4 800 MRU" />
         <SummaryRow label="Tax" value="0 MRU" />
         <SummaryRow labelStrong="Total" valueStrong="4 800 MRU" />
       </div>
-
-      {/* Payment method */}
-      <section className="mt-6 space-y-3 pb-4">
-        <h2 className="text-lg font-semibold">Payment method</h2>
-
-        <div className="grid grid-cols-3 gap-3">
-          {/* Selected */}
-          <PaymentMethodCard selected logo={<BankilyLogo />} name="Bankily" />
-          <PaymentMethodCard logo={<SedadLogo dim />} name="SedadBank" />
-          <PaymentMethodCard logo={<MasrviLogo dim />} name="Masrvi" />
-        </div>
-      </section>
-
+      <PaymentMethodCards />
       {/* Phone select */}
       <PhoneNumberSelect
-        label="Bankily phone number"
-        items={numbers}
+        items={[]}
         value={phoneId ?? undefined}
         onChange={setPhoneId}
-        onAddNew={() => {
-          // open a modal/route to add phone
-          // after saving, push into your numbers state and set selected
-          alert("Add phone flow here");
-        }}
       />
-
       {/* spacer so sticky button doesn’t overlap content */}
       <div className="h-24" />
-
       {/* Sticky Pay button */}
       <div className="bg-background/95 fixed inset-x-0 bottom-0 z-20 border-t backdrop-blur">
         <div className="mx-auto w-full max-w-xl p-4">
@@ -119,36 +93,6 @@ function SummaryRow({
       >
         {valueStrong ?? value}
       </div>
-    </div>
-  );
-}
-
-function PaymentMethodCard({
-  logo,
-  name,
-  selected,
-}: {
-  logo: React.ReactNode;
-  name: string;
-  selected?: boolean;
-}) {
-  return (
-    <div
-      className={[
-        "bg-card relative rounded-2xl border p-3 text-center shadow-sm",
-        selected ? "ring-foreground/80 ring-2" : "opacity-100",
-      ].join(" ")}
-    >
-      {/* check badge when selected */}
-      {selected && (
-        <div className="bg-foreground  text-background absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full text-[10px]">
-          ✓
-        </div>
-      )}
-      <div className="bg-background mb-2 flex h-14 items-center justify-center overflow-hidden rounded-lg">
-        {logo}
-      </div>
-      <div className="text-foreground text-xs">{name}</div>
     </div>
   );
 }
