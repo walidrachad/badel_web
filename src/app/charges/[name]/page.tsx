@@ -1,24 +1,110 @@
-// app/(dashboard)/gaming/page.tsx
-// Design-only: no data, no actions. Tailwind UI only.
+// src/app/charges/[name]/page.tsx
+"use client";
 
+import { useSearchParams } from "next/navigation";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getChargePageItems, type Category } from "@/lib/api/charge";
 import AppBar from "@/components/mobile/app_bar/AppBar";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-export default function GamingScreen() {
+/* ---------- helpers ---------- */
+const fullUrl = (p?: string | null) =>
+  p ? new URL(p, "https://staging.bedelportal.com/").toString() : null;
+
+const byOrder = <T extends { order?: number }>(a: T, b: T) =>
+  (a.order ?? 9_999_999) - (b.order ?? 9_999_999);
+
+/* ---------- small atom ---------- */
+function ImageCard({
+  src,
+  title,
+  rounded = "rounded-xl",
+  className = "",
+  href = "/charges/gaming/1",
+}: {
+  src: string; // plain URL
+  title?: string;
+  rounded?: string;
+  className?: string;
+  href?: string;
+}) {
   return (
-    <div className="mx-auto w-full max-w-xl space-y-5 sm:p-6">
+    <Link href={href} className="block hover:bg-accent/30">
+      <div className={`${rounded} overflow-hidden border shadow-sm`}>
+        <div
+          className={`w-full bg-center bg-[length:100%_100%] ${className || "h-44"}`}
+          style={{ backgroundImage: `url('${src}')` }}
+        />
+        {title ? (
+          <div className="px-4 py-3 text-sm font-medium">{title}</div>
+        ) : null}
+      </div>
+    </Link>
+  );
+}
+
+/* ---------- page ---------- */
+export default function GamingCategoriesPage() {
+  const sp = useSearchParams();
+  const groupId = Number(sp.get("groupId")); // optional in this screen
+  const qc = useQueryClient();
+
+  const cached =
+    qc.getQueryData<Category[]>(["groupCategories", groupId]) ?? [];
+
+  const {
+    data = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
+    queryKey: ["groupCategories", groupId],
+    queryFn: async () => {
+      if (cached.length) return cached;
+      const items = await getChargePageItems();
+      const group: any = items.find(
+        (it: any) => it.type === "group" && it.id === groupId
+      );
+      return group ? (group.categories as Category[]) : [];
+    },
+    initialData: cached,
+    select: (arr) => [...arr].sort(byOrder),
+    staleTime: 60_000,
+  });
+
+  if (isLoading)
+    return (
+      <div className="mx-auto flex w-full max-w-xl items-center justify-center py-20">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600" />
+      </div>
+    );
+
+  if (isError)
+    return (
+      <div className="p-6">
+        <p className="text-red-600">Failed to load.</p>
+        <button
+          onClick={() => refetch()}
+          className="mt-2 rounded border px-3 py-1"
+        >
+          Retry
+        </button>
+      </div>
+    );
+
+  return (
+    <div className="mx-auto w-full max-w-xl space-y-5 p-4 sm:p-6">
       <AppBar title="Gaming" />
+
+      {/* Search with left icon */}
       <div className="relative w-full">
-        {/* Left Icon */}
         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-dark-6 dark:text-gray-400">
-          {/* Example: search icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
             fill="none"
             viewBox="0 0 24 24"
-            color="#000"
             stroke="currentColor"
             strokeWidth={2}
           >
@@ -30,7 +116,6 @@ export default function GamingScreen() {
           </svg>
         </span>
 
-        {/* Input */}
         <input
           placeholder="Search for Gaming..."
           className={cn(
@@ -40,56 +125,29 @@ export default function GamingScreen() {
         />
       </div>
 
-      {/* Cards list */}
-      <div className="space-y-4">
-        {/* PUBG image card */}
-        <ImageCard
-          rounded="rounded-3xl"
-          bg="url('/images/demo/frame_275_2.png')"
-          title="" // design-only, no overlay title in mock
-          className="h-60"
-        />
-        <ImageCard
-          rounded="rounded-3xl"
-          bg="url('/images/demo/frame_275.png')"
-          title="" // design-only, no overlay title in mock
-          className="h-60"
-        />
-        <ImageCard
-          rounded="rounded-3xl"
-          bg="url('/images/demo/image_1.png')"
-          title=""
-          className="h-60"
-        />
-      </div>
+      {data.length === 0 ? (
+        <p className="text-sm text-muted-foreground">No categories found.</p>
+      ) : (
+        <div className="space-y-4">
+          {data.map((cat) => {
+            const src =
+              fullUrl(cat.small_image) ??
+              fullUrl(cat.image_path) ??
+              "/images/demo/fallback.png"; // safe fallback
+
+            return (
+              <ImageCard
+                key={cat.id}
+                rounded="rounded-3xl"
+                src={src}
+                title=""
+                className="h-60"
+                href={`/charges/category/${cat.id}`}
+              />
+            );
+          })}
+        </div>
+      )}
     </div>
-  );
-}
-
-/* --------- atoms (reuse from previous screen if you already have them) --------- */
-
-function ImageCard({
-  bg,
-  title,
-  rounded = "rounded-xl",
-  className = "",
-}: {
-  bg: string;
-  title?: string;
-  rounded?: string;
-  className?: string;
-}) {
-  return (
-    <Link href={`/charges/gaming/1`} className="hover:bg-accent/30 block">
-      <div className={`${rounded} overflow-hidden border shadow-sm`}>
-        <div
-          className={`w-full bg-cover bg-center ${className || "h-44"}`}
-          style={{ backgroundImage: bg }}
-        />
-        {title ? (
-          <div className="px-4 py-3 text-sm font-medium">{title}</div>
-        ) : null}
-      </div>
-    </Link>
   );
 }

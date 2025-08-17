@@ -10,6 +10,7 @@ import {
   GroupItem,
   type ChargeItem,
 } from "@/lib/api/charge";
+import SeeMoreCard from "@/components/SeeMoreCard";
 
 export default function ChargeScreen() {
   const { data, isLoading, isError, refetch } = useQuery({
@@ -59,7 +60,7 @@ export default function ChargeScreen() {
                   title=""
                 />
               ))}
-              <SeeMoreCard />
+              <SeeMoreCard groupId={item.id} categories={item.categories} />
             </div>
           </Section>
         ) : (
@@ -114,33 +115,5 @@ function ImageCard({
         style={{ backgroundImage: bg }}
       />
     </div>
-  );
-}
-
-function SeeMoreCard() {
-  return (
-    <Link href={`/charges/gaming`} className="block hover:bg-accent/30">
-      <div className="rounded-2xl aspect-[16/10] bg-[#F0F0F3] flex flex-col items-center justify-center border">
-        <div className="h-8 w-8 rounded-full flex items-center justify-center">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            color="#000"
-            className="text-foreground"
-          >
-            <path
-              d="M9 6l6 6-6 6"
-              stroke="currentColor"
-              strokeWidth="2"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-        <p className="mt-2 text-sm text-muted-foreground">See more</p>
-      </div>
-    </Link>
   );
 }
