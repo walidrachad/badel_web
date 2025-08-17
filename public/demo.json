@@ -1,0 +1,165 @@
+{
+  "status": true,
+  "data": [
+    {
+      "id": 1,
+      "type": "group",
+      "order": 1,
+      "name": "Streaming Services",
+      "name_fr": "Services de diffusion",
+      "name_ar": "أنها توفر أفضل الأسعار وتدعم أغلب الخدمات",
+      "image_path": "assets/images/gift_cards/1753795625_nintendo.png",
+      "categories": [
+        {
+          "id": 4,
+          "name": "Apple Charge",
+          "name_fr": null,
+          "name_ar": null,
+          "description": "Top up your Apple ID balance easily and enjoy access to a wide range of digital services through your Apple account. Use your balance to subscribe to AI tools like ChatGPT 🤖, Claude, and Perplexity, upgrade your iCloud storage ☁️, and enjoy premium entertainment with Apple Music 🎵 and Apple TV+ 📺. You can also recharge your TikTok 🎁 or subscribe to Snapchat Plus 👻 using the same balance. One charge, full control – official ✅, instant ⚡, and secure 🔒.",
+          "description_fr": "hdfhdh",
+          "description_ar": "rabic",
+          "image_path": "assets/images/gift_cards/1753705264_apple-final.png",
+          "small_image": "assets/images/gift_cards/1753795523_apple-final.png",
+          "desclaimer": null,
+          "desclaimer_fr": null,
+          "desclaimer_ar": null,
+          "in_stock": 1,
+          "type": "country",
+          "order": 1,
+          "giftcards": [
+            {
+              "id": 63,
+              "name": "Apple Gift Card USA 200$ 🇺🇸",
+              "output": "200$",
+              "output_fr": "200$",
+              "output_ar": "200 دولار",
+              "amount": "8400.00",
+              "amount_after_fee": "9600.00",
+              "in_stock": 1,
+              "country": "US",
+              "category_id": 4,
+              "display_type": "country",
+              "display_value": "US",
+              "display_order": 1007
+            },
+            {
+              "id": 64,
+              "name": "Apple Gift Card USA 250$ 🇺🇸",
+              "output": "250$",
+              "output_fr": "250$",
+              "output_ar": "250 دولار",
+              "amount": "10500.00",
+              "amount_after_fee": "12000.00",
+              "in_stock": 1,
+              "country": "US",
+              "category_id": 4,
+              "display_type": "country",
+              "display_value": "US",
+              "display_order": 1008
+            }
+          ]
+        },
+        {
+          "id": 23,
+          "name": "PUBG Mobile UC",
+          "name_fr": "PUBG Mobile UC",
+          "name_ar": "PUBG Mobile UC",
+          "description": "PUBG Mobile UC (Unknown Cash) is the in-game currency used to unlock premium items like outfits, weapon skins, Royal Pass, and more. Instantly recharge your account and enhance your gaming experience with exclusive content.",
+          "description_fr": "PUBG Mobile UC (Unknown Cash) est la monnaie virtuelle du jeu, utilisée pour débloquer des objets premium comme des tenues, des skins d’armes, le Royal Pass, et plus encore. Rechargez instantanément votre compte et profitez de contenus exclusifs.",
+          "description_ar": "UC ببجي موبايل (Unknown Cash) هي عملة اللعبة التي تُستخدم لشراء العناصر المميزة مثل الأزياء، أشكال الأسلحة، بطاقة الرويال باس، والمزيد. اشحن حسابك فوراً واستمتع بمحتوى حصري داخل اللعبة.",
+          "image_path": "assets/images/gift_cards/pubg.png",
+          "small_image": null,
+          "desclaimer": null,
+          "desclaimer_fr": null,
+          "desclaimer_ar": null,
+          "in_stock": 1,
+          "type": "none",
+          "order": 1,
+          "giftcards": [
+            {
+              "id": 63,
+              "name": "Apple Gift Card USA 200$ 🇺🇸",
+              "output": "200$",
+              "output_fr": "200$",
+              "output_ar": "200 دولار",
+              "amount": "8400.00",
+              "amount_after_fee": "9600.00",
+              "in_stock": 1,
+              "country": "US",
+              "category_id": 4,
+              "display_type": "country",
+              "display_value": "US",
+              "display_order": 1007
+            },
+            {
+              "id": 64,
+              "name": "Apple Gift Card USA 250$ 🇺🇸",
+              "output": "250$",
+              "output_fr": "250$",
+              "output_ar": "250 دولار",
+              "amount": "10500.00",
+              "amount_after_fee": "12000.00",
+              "in_stock": 1,
+              "country": "US",
+              "category_id": 4,
+              "display_type": "country",
+              "display_value": "US",
+              "display_order": 1008
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Apple Charge",
+      "name_fr": null,
+      "name_ar": null,
+      "description": "Top up your Apple ID balance easily and enjoy access to a wide range of digital services through your Apple account. Use your balance to subscribe to AI tools like ChatGPT 🤖, Claude, and Perplexity, upgrade your iCloud storage ☁️, and enjoy premium entertainment with Apple Music 🎵 and Apple TV+ 📺. You can also recharge your TikTok 🎁 or subscribe to Snapchat Plus 👻 using the same balance. One charge, full control – official ✅, instant ⚡, and secure 🔒.",
+      "description_fr": "hdfhdh",
+      "description_ar": "rabic",
+      "image_path": "assets/images/gift_cards/1753705264_apple-final.png",
+      "small_image": "assets/images/gift_cards/1753795523_apple-final.png",
+      "desclaimer": null,
+      "desclaimer_fr": null,
+      "desclaimer_ar": null,
+      "in_stock": 1,
+      "type": "country",
+      "order": 3,
+      "giftcards": [
+        {
+          "id": 67,
+          "name": "Apple Gift Card CAD 5$ ca",
+          "output": "5$",
+          "output_fr": "5$",
+          "output_ar": "5 دولار",
+          "amount": "210.00",
+          "amount_after_fee": "240.00",
+          "in_stock": 1,
+          "country": "CA",
+          "category_id": 4,
+          "display_type": "country",
+          "display_value": "CA",
+          "display_order": 3001
+        },
+        {
+          "id": 68,
+          "name": "Apple Gift Card CAD 10$ ca",
+          "output": "10$",
+          "output_fr": "10$",
+          "output_ar": "10 دولار",
+          "amount": "378.00",
+          "amount_after_fee": "430.00",
+          "in_stock": 1,
+          "country": "CA",
+          "category_id": 4,
+          "display_type": "country",
+          "display_value": "CA",
+          "display_order": 3002
+        }
+      ]
+    }
+  ],
+  "recent_categories": [],
+  "message": "Charge page items retrieved successfully (V3 Simplified)"
+}

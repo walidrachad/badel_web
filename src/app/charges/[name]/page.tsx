@@ -2,35 +2,42 @@
 // Design-only: no data, no actions. Tailwind UI only.
 
 import AppBar from "@/components/mobile/app_bar/AppBar";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 export default function GamingScreen() {
   return (
     <div className="mx-auto w-full max-w-xl space-y-5 sm:p-6">
       <AppBar title="Gaming" />
-      {/* Search */}
-      <div className="bg-background rounded-2xl border px-4 py-2.5 shadow-sm">
-        <div className="text-muted-foreground flex items-center gap-2">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <circle
-              cx="11"
-              cy="11"
-              r="7"
-              stroke="currentColor"
-              strokeWidth="2"
-            />
+      <div className="relative w-full">
+        {/* Left Icon */}
+        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-dark-6 dark:text-gray-400">
+          {/* Example: search icon */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            color="#000"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
             <path
-              d="M20 20l-3.5-3.5"
-              stroke="currentColor"
-              strokeWidth="2"
               strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"
             />
           </svg>
-          <input
-            className="placeholder:text-muted-foreground h-6 flex-1 bg-transparent text-sm outline-none"
-            placeholder="Search for Gaming..."
-          />
-        </div>
+        </span>
+
+        {/* Input */}
+        <input
+          placeholder="Search for Gaming..."
+          className={cn(
+            "w-full rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition focus:border-[#000] disabled:cursor-default disabled:bg-gray-2 data-[active=true]:border-[#000] dark:border-dark-3 dark:bg-dark-2 dark:focus:border-[#000] dark:disabled:bg-dark dark:data-[active=true]:border-[#000]",
+            "pl-10 pr-5 py-3 text-dark placeholder:text-dark dark:text-white"
+          )}
+        />
       </div>
 
       {/* Cards list */}
@@ -38,21 +45,21 @@ export default function GamingScreen() {
         {/* PUBG image card */}
         <ImageCard
           rounded="rounded-3xl"
-          bg="url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200&auto=format&fit=crop')"
+          bg="url('/images/demo/frame_275_2.png')"
           title="" // design-only, no overlay title in mock
-          className="h-44 sm:h-52"
+          className="h-60"
         />
         <ImageCard
           rounded="rounded-3xl"
-          bg="url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200&auto=format&fit=crop')"
+          bg="url('/images/demo/frame_275.png')"
           title="" // design-only, no overlay title in mock
-          className="h-44 sm:h-52"
+          className="h-60"
         />
         <ImageCard
           rounded="rounded-3xl"
-          bg="url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200&auto=format&fit=crop')"
-          title="" // design-only, no overlay title in mock
-          className="h-44 sm:h-52"
+          bg="url('/images/demo/image_1.png')"
+          title=""
+          className="h-60"
         />
       </div>
     </div>

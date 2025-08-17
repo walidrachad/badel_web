@@ -1,71 +1,83 @@
 // app/(dashboard)/charge/page.tsx
 // Design-only: no data fetching, no actions, just Tailwind UI
-
+"use client";
 import AppBar from "@/components/mobile/app_bar/AppBar";
 import Link from "next/link";
-import { title } from "process";
+import { useQuery } from "@tanstack/react-query";
+import {
+  Category,
+  getChargePageItems,
+  GroupItem,
+  type ChargeItem,
+} from "@/lib/api/charge";
 
 export default function ChargeScreen() {
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ["todos"],
+    queryFn: getChargePageItems,
+  });
+  const todos = (data ?? []) as GroupItem[];
+  const ordered = [...todos].sort(
+    (a, b) => (a.order ?? 9999) - (b.order ?? 9999)
+  );
+
+  if (isLoading)
+    return (
+      <div className="mx-auto flex w-full max-w-xl items-center justify-center py-20">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600" />
+      </div>
+    );
+  if (isError)
+    return (
+      <div className="p-6">
+        <p className="text-red-600">Failed to load.</p>
+        <button
+          onClick={() => refetch()}
+          className="mt-2 rounded border px-3 py-1"
+        >
+          Retry
+        </button>
+      </div>
+    );
+
   return (
     <div className="mx-auto w-full max-w-xl sm:p-6 space-y-6">
-      <AppBar title="Charge" />
+      <AppBar title="Marketplace" />
 
       {/* Hero / Apple card */}
-      <div
-        className="rounded-3xl p-4 sm:p-6 bg-[length:100%_100%]"
-        style={{
-          backgroundImage: "url('/images/demo/frame_275_3.png')",
-        }}
-      >
-        <div className="aspect-[16/9] w-full rounded-2xl p-5 sm:p-7 relative overflow-hidden">
-          {/* Apple logo placeholder */}
-          <div className="absolute inset-0 flex items-center justify-center"></div>
-        </div>
-      </div>
 
-      {/* Gaming */}
-      <Section title="Gaming">
-        <div className="grid grid-cols-2 gap-4">
-          <ImageCard
-            title="PUBG Mobile"
-            badge="UG"
-            bg="url('/images/demo/image_1.png')"
-          />
-          <ImageCard
-            title="PlayStation Store"
-            flag="🇬🇧"
-            bg="url('/images/demo/frame_275_2.png')"
-          />
-          <ImageCard
-            title="PlayStation Store"
-            flag="🇬🇧"
-            bg="url('/images/demo/frame_275.png')"
-          />
-          <SeeMoreCard />
-        </div>
-      </Section>
-
-      {/* Entertainment */}
-      <Section title="Entertainment">
-        <div className="grid grid-cols-2 gap-4">
-          <ImageCard
-            title="PUBG Mobile"
-            badge="UG"
-            bg="url('/images/demo/image_1.png')"
-          />
-          <ImageCard
-            title="PlayStation Store"
-            flag="🇬🇧"
-            bg="url('/images/demo/frame_275_2.png')"
-          />
-          <ImageCard
-            title="PlayStation Store"
-            flag="🇬🇧"
-            bg="url('/images/demo/frame_275.png')"
-          />
-          <SeeMoreCard />
-        </div>
-      </Section>
+      {ordered.map((item) =>
+        "type" in item && item.type === "group" ? (
+          <Section key={item.id} title={item.name}>
+            <div className="grid grid-cols-2 gap-4">
+              {item.categories.map((cat: Category) => (
+                <ImageCard
+                  key={cat.id}
+                  bg={`url('https://staging.bedelportal.com/${
+                    cat.image_path
+                  }')`}
+                  title=""
+                />
+              ))}
+              <SeeMoreCard />
+            </div>
+          </Section>
+        ) : (
+          <div
+            className="rounded-3xl border p-4 sm:p-6 bg-[length:100%_100%]"
+            style={{
+              backgroundImage: `url('https://staging.bedelportal.com/${
+                (item as any).image_path
+              }')`,
+            }}
+          >
+            <div className="aspect-[16/9] w-full rounded-2xl p-5 sm:p-7 relative overflow-hidden">
+              {/* Apple logo placeholder */}
+              <div className="absolute inset-0 flex items-center justify-center"></div>
+            </div>
+          </div>
+        )
+      )}
     </div>
   );
 }
