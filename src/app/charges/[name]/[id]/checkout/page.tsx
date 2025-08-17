@@ -1,9 +1,17 @@
 // app/(dashboard)/checkout/confirm/page.tsx
 // Design-only: Tailwind UI (no data, no actions)
-
+"use client";
+import { useState } from "react";
+import PhoneNumberSelect from "@/components/mobile/PhoneNumberSelect";
 import AppBar from "@/components/mobile/app_bar/AppBar";
 
 export default function ConfirmPaymentPage() {
+  const [phoneId, setPhoneId] = useState<string | null>(null);
+
+  const numbers = [
+    { id: "33223301", label: "33 22 33 01" },
+    { id: "33556677", label: "33 55 66 77" },
+  ];
   return (
     <div className="mx-auto w-full max-w-xl sm:p-6">
       {/* Header */}
@@ -14,9 +22,11 @@ export default function ConfirmPaymentPage() {
         <AppleCardMini />
         <div className="min-w-0">
           <div className="truncate text-base font-semibold">
-            Apple Gift Card
+            <h2>Apple Gift Card</h2>
           </div>
-          <div className="text-muted-foreground text-sm">USA • $100</div>
+          <div className="text-muted-foreground text-sm">
+            <p>USA • $100</p>
+          </div>
         </div>
       </div>
 
@@ -28,7 +38,7 @@ export default function ConfirmPaymentPage() {
       </div>
 
       {/* Payment method */}
-      <section className="mt-6 space-y-3">
+      <section className="mt-6 space-y-3 pb-4">
         <h2 className="text-lg font-semibold">Payment method</h2>
 
         <div className="grid grid-cols-3 gap-3">
@@ -40,10 +50,17 @@ export default function ConfirmPaymentPage() {
       </section>
 
       {/* Phone select */}
-      <section className="mt-6 space-y-2">
-        <h3 className="text-sm font-medium">Bankily phone number</h3>
-        <SelectField placeholder="Select Bankily number" />
-      </section>
+      <PhoneNumberSelect
+        label="Bankily phone number"
+        items={numbers}
+        value={phoneId ?? undefined}
+        onChange={setPhoneId}
+        onAddNew={() => {
+          // open a modal/route to add phone
+          // after saving, push into your numbers state and set selected
+          alert("Add phone flow here");
+        }}
+      />
 
       {/* spacer so sticky button doesn’t overlap content */}
       <div className="h-24" />
@@ -63,20 +80,10 @@ export default function ConfirmPaymentPage() {
 function AppleCardMini() {
   return (
     <div
-      className="h-24 w-40 shrink-0 rounded-2xl p-2"
-      style={{ background: "linear-gradient(135deg,#0a84ff 0%,#0041c4 100%)" }}
+      className="h-24 w-40 shrink-0 rounded-2xl p-2 bg-[length:100%_100%]"
+      style={{ backgroundImage: "url('/images/demo/frame_275_3.png')" }}
     >
-      <div className="relative h-full w-full rounded-xl bg-white/0">
-        {/* Apple bubble */}
-        <div className="absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/95 shadow" />
-        {/* pill of icons */}
-        <div className="absolute inset-x-3 bottom-2 flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 text-xs shadow-sm backdrop-blur">
-          <span>🎵</span>
-          <span>🤖</span>
-          <span>☁️</span>
-          <span>👻</span>
-        </div>
-      </div>
+      <div className="relative h-full w-full rounded-xl bg-white/0"></div>
     </div>
   );
 }
@@ -97,13 +104,19 @@ function SummaryRow({
       <div
         className={
           labelStrong
-            ? "text-base font-semibold"
+            ? "text-base font-semibold text-[#000] "
             : "text-muted-foreground text-base"
         }
       >
         {labelStrong ?? label}
       </div>
-      <div className={valueStrong ? "text-base font-semibold" : "text-base"}>
+      <div
+        className={
+          valueStrong
+            ? "text-base font-semibold text-[#000] "
+            : "text-base text-[#000]"
+        }
+      >
         {valueStrong ?? value}
       </div>
     </div>
@@ -128,7 +141,7 @@ function PaymentMethodCard({
     >
       {/* check badge when selected */}
       {selected && (
-        <div className="bg-foreground text-background absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full text-[10px]">
+        <div className="bg-foreground  text-background absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full text-[10px]">
           ✓
         </div>
       )}
@@ -136,28 +149,6 @@ function PaymentMethodCard({
         {logo}
       </div>
       <div className="text-foreground text-xs">{name}</div>
-    </div>
-  );
-}
-
-function SelectField({ placeholder }: { placeholder: string }) {
-  return (
-    <div className="bg-background flex items-center justify-between rounded-2xl border px-3 py-3">
-      <span className="text-muted-foreground text-sm">{placeholder}</span>
-      <svg
-        viewBox="0 0 24 24"
-        width="18"
-        height="18"
-        className="text-muted-foreground"
-      >
-        <path
-          d="M6 9l6 6 6-6"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-      </svg>
     </div>
   );
 }
@@ -172,6 +163,7 @@ function BankilyLogo() {
     </div>
   );
 }
+
 function SedadLogo({ dim }: { dim?: boolean }) {
   return (
     <div className={`flex items-center gap-2 ${dim ? "opacity-60" : ""}`}>
@@ -180,6 +172,7 @@ function SedadLogo({ dim }: { dim?: boolean }) {
     </div>
   );
 }
+
 function MasrviLogo({ dim }: { dim?: boolean }) {
   return (
     <div className={`flex items-center gap-2 ${dim ? "opacity-60" : ""}`}>
