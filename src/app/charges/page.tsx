@@ -66,18 +66,20 @@ export default function ChargeScreen() {
             </div>
           </Section>
         ) : (
-          <div
-            className="rounded-3xl border p-4 sm:p-6 bg-[length:100%_100%]"
-            style={{
-              backgroundImage: `url('https://staging.bedelportal.com/${
-                (item as any).image_path
-              }')`,
-            }}
-          >
-            <div className="aspect-[16/9] w-full rounded-2xl p-5 sm:p-7 relative overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center"></div>
+          <CategoryTile cat={item}>
+            <div
+              className="rounded-2xl border p-4 sm:p-6 bg-[length:100%_100%]"
+              style={{
+                backgroundImage: `url('https://staging.bedelportal.com/${
+                  (item as any).image_path
+                }')`,
+              }}
+            >
+              <div className="aspect-[16/9] w-full rounded-2xl p-5 sm:p-7 relative overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center"></div>
+              </div>
             </div>
-          </div>
+          </CategoryTile>
         )
       )}
     </div>

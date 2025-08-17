@@ -13,7 +13,7 @@ import {
   codeToFlagEmoji,
   codeToName,
 } from "@/lib/country";
-import { GiftCard, GiftcardGrid } from "./GiftcardGrid";
+import GiftcardGrid, { GiftCard } from "./GiftcardGrid";
 const fullUrl = (p?: string | null) =>
   p ? new URL(p, "https://staging.bedelportal.com/").toString() : null;
 
@@ -188,9 +188,8 @@ export default function CategoryPage() {
         )}
       </section> */}
       <GiftcardGrid
-        giftcards={filteredGiftcards /* or cat.giftcards */}
-        defaultId={filteredGiftcards[0]?.id}
-        onChange={(gc) => setSelectedGC(gc)}
+        giftcards={filteredGiftcards ?? []}
+        onChange={setSelectedGC}
       />
       <div className="h-24" />
 
@@ -198,22 +197,19 @@ export default function CategoryPage() {
       <div className="fixed inset-x-0 bottom-0 z-20 border-t bg-background/95 backdrop-blur">
         <div className="mx-auto flex w-full max-w-xl items-center gap-3 p-4">
           <button
-            type="button"
             disabled={!selectedGC}
-            aria-disabled={!selectedGC}
             className={[
               "flex-1 rounded-2xl px-4 py-3 text-center text-sm font-semibold shadow-sm transition",
               selectedGC
                 ? "bg-orange-600 text-white hover:opacity-95"
                 : "cursor-not-allowed bg-gray-100 text-gray-400",
             ].join(" ")}
-            onClick={() => {
-              if (!selectedGC) return;
-              // navigate to checkout with selected card id
-              // router.push(`/charges/category/${cat.id}/checkout?gift=${selectedGC.id}`);
-            }}
           >
-            {selectedGC ? `Proceed • ${priceText}` : "Select an amount"}
+            {selectedGC
+              ? `Proceed • ${Number(
+                  selectedGC.amount_after_fee ?? selectedGC.amount ?? 0
+                ).toLocaleString("fr-FR")} MRU`
+              : "Select an amount"}
           </button>
         </div>
       </div>

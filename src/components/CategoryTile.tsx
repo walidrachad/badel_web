@@ -9,7 +9,7 @@ export default function CategoryTile({
   cat,
   children,
 }: {
-  cat: Category;
+  cat: any;
   children?: ReactNode;
 }) {
   const router = useRouter();
@@ -26,5 +26,9 @@ export default function CategoryTile({
       ? new URL(cat.image_path, "https://staging.bedelportal.com/").toString()
       : "/images/demo/fallback.png";
 
-  return <button onClick={go}>{children}</button>;
+  return (
+    <button className="w-full" onClick={go}>
+      {children}
+    </button>
+  );
 }

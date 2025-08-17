@@ -7,6 +7,7 @@ import { getChargePageItems, type Category } from "@/lib/api/charge";
 import AppBar from "@/components/mobile/app_bar/AppBar";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import CategoryTile from "@/components/CategoryTile";
 
 /* ---------- helpers ---------- */
 const fullUrl = (p?: string | null) =>
@@ -135,14 +136,16 @@ export default function GamingCategoriesPage() {
               fullUrl(cat.image_path) ??
               "/images/demo/fallback.png"; // safe fallback
             return (
-              <ImageCard
-                key={cat.id}
-                rounded="rounded-3xl"
-                src={src}
-                title=""
-                className="h-60"
-                href={`/charges/category/${cat.id}`}
-              />
+              <CategoryTile cat={cat}>
+                <ImageCard
+                  key={cat.id}
+                  rounded="rounded-3xl"
+                  src={src}
+                  title=""
+                  className="h-60"
+                  href={`/charges/category/${cat.id}`}
+                />
+              </CategoryTile>
             );
           })}
         </div>
