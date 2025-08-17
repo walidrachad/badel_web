@@ -2,7 +2,6 @@
 // Design-only: no data fetching, no actions, just Tailwind UI
 "use client";
 import AppBar from "@/components/mobile/app_bar/AppBar";
-import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import {
   Category,
@@ -11,6 +10,7 @@ import {
   type ChargeItem,
 } from "@/lib/api/charge";
 import SeeMoreCard from "@/components/SeeMoreCard";
+import CategoryTile from "@/components/CategoryTile";
 
 export default function ChargeScreen() {
   const { data, isLoading, isError, refetch } = useQuery({
@@ -52,15 +52,17 @@ export default function ChargeScreen() {
           <Section key={item.id} title={item.name}>
             <div className="grid grid-cols-2 gap-4">
               {item.categories.map((cat: Category) => (
-                <ImageCard
-                  key={cat.id}
-                  bg={`url('https://staging.bedelportal.com/${
-                    cat.image_path
-                  }')`}
-                  title=""
-                />
+                <CategoryTile cat={cat}>
+                  <ImageCard
+                    key={cat.id}
+                    bg={`url('https://staging.bedelportal.com/${
+                      cat.image_path
+                    }')`}
+                    title=""
+                  />
+                </CategoryTile>
               ))}
-              <SeeMoreCard groupId={item.id} categories={item.categories} />
+              <SeeMoreCard groupId={item.name} categories={item.categories} />
             </div>
           </Section>
         ) : (
@@ -73,7 +75,6 @@ export default function ChargeScreen() {
             }}
           >
             <div className="aspect-[16/9] w-full rounded-2xl p-5 sm:p-7 relative overflow-hidden">
-              {/* Apple logo placeholder */}
               <div className="absolute inset-0 flex items-center justify-center"></div>
             </div>
           </div>

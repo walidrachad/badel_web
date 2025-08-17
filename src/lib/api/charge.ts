@@ -49,7 +49,7 @@ export type ChargeItem = GroupItem | Category;
 
 import { http } from "@/lib/http";
 
-export async function getChargePageItems(): Promise<ChargeItem[]> {
+export async function getChargePageItems(): Promise<any[]> {
   const res = await http.get<{
     status: boolean;
     data: ChargeItem[];

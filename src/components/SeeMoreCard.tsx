@@ -11,7 +11,7 @@ export default function SeeMoreCard({
   categories,
 }: {
   href?: string;
-  groupId: number;
+  groupId: string;
   categories: Category[];
 }) {
   const router = useRouter();

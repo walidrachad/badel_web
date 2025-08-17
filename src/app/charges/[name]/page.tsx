@@ -47,7 +47,7 @@ function ImageCard({
 /* ---------- page ---------- */
 export default function GamingCategoriesPage() {
   const sp = useSearchParams();
-  const groupId = Number(sp.get("groupId")); // optional in this screen
+  const groupId = String(sp.get("groupId"));
   const qc = useQueryClient();
 
   const cached =
@@ -95,7 +95,7 @@ export default function GamingCategoriesPage() {
 
   return (
     <div className="mx-auto w-full max-w-xl space-y-5 p-4 sm:p-6">
-      <AppBar title="Gaming" />
+      <AppBar title={groupId} />
 
       {/* Search with left icon */}
       <div className="relative w-full">
@@ -134,7 +134,6 @@ export default function GamingCategoriesPage() {
               fullUrl(cat.small_image) ??
               fullUrl(cat.image_path) ??
               "/images/demo/fallback.png"; // safe fallback
-
             return (
               <ImageCard
                 key={cat.id}
