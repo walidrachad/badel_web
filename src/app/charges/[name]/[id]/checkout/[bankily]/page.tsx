@@ -1,9 +1,13 @@
 // app/(dashboard)/checkout/bankily/page.tsx
 // Design-only UI for "Bankily payment" (no logic)
+"use client";
 
 import AppBar from "@/components/mobile/app_bar/AppBar";
+import { useSavedPhone } from "@/hooks/useSavedPhone";
 
 export default function BankilyPaymentPage() {
+  const { selected } = useSavedPhone();
+
   return (
     <div className="mx-auto w-full max-w-xl sm:p-6">
       {/* Header */}
@@ -133,7 +137,9 @@ export default function BankilyPaymentPage() {
                 />
               </svg>
             </div>
-            <div className="text-xl font-semibold tracking-wide">32001625</div>
+            <div className="text-xl font-semibold tracking-wide">
+              {selected?.label}
+            </div>
           </div>
           <p className="text-muted-foreground mt-2 text-[13px] leading-5">
             يجب عليك استخدام هذا رقم في دفع أو انقر هنا لتغييره

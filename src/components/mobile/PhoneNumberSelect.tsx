@@ -1,17 +1,20 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  PHONES_KEY,
+  SELECTED_PHONE_KEY,
+  getSavedPhones,
+  setSavedPhones,
+  setSelectedPhoneId,
+  type PhoneItem,
+} from "@/lib/phoneStorage";
 
 type Item = { id: string; label: string };
 
-const LS_KEY = "bankily_phones";
-
-/** make an id from label by stripping spaces (you can customize) */
 function labelToId(label: string) {
   return label.replace(/\s+/g, "");
 }
-
-/** de-dup by id, last-in wins */
 function uniqById(arr: Item[]) {
   const map = new Map<string, Item>();
   for (const it of arr) map.set(it.id, it);
@@ -25,39 +28,33 @@ export default function PhoneNumberSelect({
   onChange,
   onAddNew,
   className = "",
+  persistSelection = true, // NEW: save selected id automatically
 }: {
   label?: string;
-  items: Item[]; // initial list from props
-  value?: string | null; // selected id (controlled or uncontrolled)
+  items: Item[];
+  value?: string | null; // selected id (controlled allowed)
   onChange?: (id: string) => void;
-  onAddNew?: () => void; // optional extra side-effect hook
+  onAddNew?: () => void;
   className?: string;
+  persistSelection?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const btnRef = useRef<HTMLButtonElement | null>(null);
   const popRef = useRef<HTMLDivElement | null>(null);
 
-  // local list that merges LS + props.items
+  // load phones (merge props + localStorage)
   const [localItems, setLocalItems] = useState<Item[]>([]);
-
-  // ---- load from LS & merge with props on mount/when items change
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(LS_KEY);
-      const fromLS: Item[] = raw ? JSON.parse(raw) : [];
-      setLocalItems(uniqById([...fromLS, ...items]));
-    } catch {
-      setLocalItems(uniqById([...items]));
-    }
+    const ls = getSavedPhones();
+    setLocalItems(uniqById([...ls, ...items]));
   }, [items]);
 
-  // ---- save any changes of localItems back to LS
+  // save to localStorage when list changes
   useEffect(() => {
-    try {
-      localStorage.setItem(LS_KEY, JSON.stringify(localItems));
-    } catch {}
+    if (localItems.length) setSavedPhones(localItems as PhoneItem[]);
   }, [localItems]);
 
+  // selected item
   const selected = useMemo(
     () => localItems.find((i) => i.id === value) ?? null,
     [localItems, value]
@@ -83,8 +80,13 @@ export default function PhoneNumberSelect({
     };
   }, [open]);
 
+  function selectAndPersist(id: string) {
+    onChange?.(id);
+    if (persistSelection) setSelectedPhoneId(id); // 🔐 save selected id
+    setOpen(false);
+  }
+
   function handleAdd() {
-    // you can replace this with a custom modal
     const raw = prompt("Enter a new Bankily phone number (e.g. 33 22 33 01):");
     if (!raw) {
       setOpen(false);
@@ -96,18 +98,15 @@ export default function PhoneNumberSelect({
       return;
     }
     const id = labelToId(label);
-    // if exists, just select it
     const exists = localItems.find((i) => i.id === id);
     if (exists) {
-      onChange?.(exists.id);
-      setOpen(false);
+      selectAndPersist(exists.id);
       onAddNew?.();
       return;
     }
     const next = uniqById([...localItems, { id, label }]);
     setLocalItems(next);
-    onChange?.(id);
-    setOpen(false);
+    selectAndPersist(id);
     onAddNew?.();
   }
 
@@ -127,9 +126,7 @@ export default function PhoneNumberSelect({
         className={[
           "w-full rounded-2xl px-4 py-3 text-left flex items-center justify-between",
           "focus-visible:outline-none transition",
-          open
-            ? "border-2 border-[#000]" // active border
-            : "border border-gray-300", // default border
+          open ? "border-2 border-[#000]" : "border border-gray-300",
         ].join(" ")}
       >
         <span className="truncate">{selected?.label ?? "Select a phone"}</span>
@@ -163,10 +160,7 @@ export default function PhoneNumberSelect({
                       type="button"
                       role="option"
                       aria-selected={isSel}
-                      onClick={() => {
-                        onChange?.(item.id);
-                        setOpen(false);
-                      }}
+                      onClick={() => selectAndPersist(item.id)}
                       className="flex w-full items-center text-[#000] justify-between px-4 py-3 text-left hover:bg-black/[0.03]"
                     >
                       <span className="truncate">{item.label}</span>

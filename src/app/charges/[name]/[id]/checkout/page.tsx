@@ -1,13 +1,20 @@
 // app/(dashboard)/checkout/confirm/page.tsx
 // Design-only: Tailwind UI (no data, no actions)
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PhoneNumberSelect from "@/components/mobile/PhoneNumberSelect";
 import AppBar from "@/components/mobile/app_bar/AppBar";
 import PaymentMethodCards from "./PaymentMethodCards";
+import { getSelectedPhoneId } from "@/lib/phoneStorage";
 
 export default function ConfirmPaymentPage() {
-  const [phoneId, setPhoneId] = useState<string | null>(null);
+  const [phoneId, setPhoneId] = useState<string | undefined>(undefined);
+
+  // pre-fill from last selection if you want:
+  useEffect(() => {
+    const last = getSelectedPhoneId();
+    if (last) setPhoneId(last);
+  }, []);
 
   return (
     <div className="mx-auto w-full max-w-xl sm:p-6">
