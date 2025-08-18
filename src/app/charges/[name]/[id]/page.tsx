@@ -1,7 +1,7 @@
 // src/app/charges/category/[id]/page.tsx
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getChargePageItems, GroupItem, type Category } from "@/lib/api/charge";
 import AppBar from "@/components/mobile/app_bar/AppBar";
@@ -35,7 +35,7 @@ export default function CategoryPage() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [selectedGC, setSelectedGC] = useState<GiftCard | null>(null);
-
+  const pathname = usePathname();
   const cached = qc.getQueryData<Category>(["category", id]);
 
   const { data, isLoading, isError, refetch } = useQuery({
@@ -198,6 +198,9 @@ export default function CategoryPage() {
         <div className="mx-auto flex w-full max-w-xl items-center gap-3 p-4">
           <button
             disabled={!selectedGC}
+            onClick={() => {
+              router.push(pathname + `/checkout`);
+            }}
             className={[
               "flex-1 rounded-2xl px-4 py-3 text-center text-sm font-semibold shadow-sm transition",
               selectedGC

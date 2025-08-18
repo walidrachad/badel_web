@@ -42,9 +42,6 @@ export default function PaymentMethodCards({
       setError(null);
       try {
         const res = await fetch(`${BASE_URL}/api/v1/gift-cards/listsbank`, {
-          // If you need credentials or headers, add them here.
-          // credentials: "include",
-          // headers: { Authorization: `Bearer ${token}` },
           cache: "no-store",
         });
         const json = (await res.json()) as ApiResp;
