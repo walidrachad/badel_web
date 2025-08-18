@@ -25,16 +25,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <Providers>
           <NextTopLoader color="#ffffff" showSpinner={false} />
 
-          <div className="flex min-h-screen">
+          <div className="flex w-full bg-white">
             {/* <Sidebar /> */}
-
-            <div className="w-full bg-[#ffffff] dark:bg-[#020d1a]">
-              {/* <Header /> */}
-
-              <main className="isolate mx-auto w-full max-w-screen-2xl overflow-hidden p-4 md:p-6 2xl:p-10">
-                {children}
-              </main>
-            </div>
+            {children}
           </div>
         </Providers>
       </body>

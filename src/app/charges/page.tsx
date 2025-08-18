@@ -42,7 +42,7 @@ export default function ChargeScreen() {
     );
 
   return (
-    <div className="mx-auto w-full max-w-xl sm:p-6 space-y-6">
+    <div className="mx-auto w-full max-w-xl p-4 space-y-6">
       <AppBar title="Marketplace" />
 
       {/* Hero / Apple card */}

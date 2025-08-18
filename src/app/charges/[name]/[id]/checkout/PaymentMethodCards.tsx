@@ -152,16 +152,14 @@ function PaymentMethodCard({
       type="button"
       onClick={onClick}
       className={[
-        "bg-card relative rounded-2xl border p-3 text-center shadow-sm transition",
-        selected
-          ? "ring-2 ring-foreground/80"
-          : "opacity-100 hover:bg-accent/40",
+        "relative rounded-2xl border-2 p-3 text-center transition",
+        selected ? "border-[#1C2024]" : "opacity-100 ",
       ].join(" ")}
       aria-pressed={selected}
     >
       {/* check badge when selected */}
       {selected && (
-        <div className="bg-foreground text-background absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full text-[10px]">
+        <div className="bg-foreground text-background absolute bg-[#1C2024] right-2 top-2 flex h-3 w-3 items-center justify-center rounded-full text-[10px] text-[#FFF]">
           ✓
         </div>
       )}

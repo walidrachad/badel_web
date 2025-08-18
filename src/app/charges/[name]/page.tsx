@@ -95,7 +95,7 @@ export default function GamingCategoriesPage() {
     );
 
   return (
-    <div className="mx-auto w-full max-w-xl space-y-5 p-4 sm:p-6">
+    <div className="mx-auto w-full max-w-xl p-4 space-y-6">
       <AppBar title={groupId} />
 
       {/* Search with left icon */}

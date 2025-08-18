@@ -4,47 +4,40 @@
 
 import AppBar from "@/components/mobile/app_bar/AppBar";
 import { useSavedPhone } from "@/hooks/useSavedPhone";
+import PaymentFlowRow from "./PaymentFlowRow";
+import OtpInput from "./OtpInput";
+import { useState } from "react";
 
 export default function BankilyPaymentPage() {
   const { selected } = useSavedPhone();
 
-  return (
-    <div className="mx-auto w-full max-w-xl sm:p-6">
-      {/* Header */}
+  const [code, setCode] = useState("");
+  const [error, setError] = useState("");
 
-      <AppBar title="Bankily payment"></AppBar>
-      <p className="text-muted-foreground text-sm">
+  const allFilled = code.length === 4;
+  return (
+    <div className="w-full">
+      {/* Header */}
+      <div className="px-4">
+        <AppBar title="Bankily payment"></AppBar>
+      </div>
+      <p className="text-muted-foreground text-sm px-4">
         Open Bankily, choose b-pay and enter the information below
       </p>
 
       {/* App + tabs preview */}
-      <div className="bg-card mt-4 rounded-2xl border p-4">
-        <div className="flex items-center gap-3">
-          <BankilyAppIcon />
-          <svg
-            viewBox="0 0 24 24"
-            width="18"
-            height="18"
-            className="text-muted-foreground"
-          >
-            <path
-              d="M8 5l8 7-8 7"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              fill="none"
-            />
-          </svg>
-          <div className="flex flex-1 items-center gap-2">
-            <GhostTab label="Debit Card" />
-            <GhostTab label="Cash out" />
-            <GhostTab label="B-Pay" active />
-          </div>
+      <div className="bg-card mt-4 border p-4 bg-[#F9F9FB]">
+        <div className="mx-auto max-w-2xl">
+          <PaymentFlowRow
+            appImage="/images/demo/image_1.png"
+            appLabel="Bankily"
+            flowImage="/images/demo/bankily.png"
+            highlight
+          />
         </div>
 
         {/* B-Pay card */}
-        <div className="mt-4 overflow-hidden rounded-2xl border">
+        <div className="mt-4 overflow-hidden pb-4 rounded-2xl border shadow-sm bg-white">
           <div className="bg-cyan-500 px-4 py-2 text-center text-sm font-semibold text-white">
             B-Pay
           </div>
@@ -95,13 +88,11 @@ export default function BankilyPaymentPage() {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Phone number warning card */}
-      <div className="bg-card mt-4 rounded-2xl border p-3">
-        <div className="bg-background rounded-xl border p-3 shadow-sm">
+        <br />
+        <div className="bg-background rounded-xl border p-3 shadow-lg bg-white">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm font-medium">
+              <h3>رقم هاتف بنكلي</h3>
               <svg
                 viewBox="0 0 24 24"
                 width="16"
@@ -121,21 +112,6 @@ export default function BankilyPaymentPage() {
                   className="text-amber-600"
                 />
               </svg>
-              <span>رقم هاتف بنكلي</span>
-              <svg
-                viewBox="0 0 24 24"
-                width="16"
-                height="16"
-                className="text-muted-foreground"
-              >
-                <path
-                  d="M6 9l6 6 6-6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  fill="none"
-                  strokeLinecap="round"
-                />
-              </svg>
             </div>
             <div className="text-xl font-semibold tracking-wide">
               {selected?.label}
@@ -147,19 +123,23 @@ export default function BankilyPaymentPage() {
         </div>
       </div>
 
-      {/* Enter transaction code */}
-      <div className="mt-6 space-y-3">
+      <div className="mt-6 space-y-3 px-4">
         <p className="text-sm">
           After paying using B-Pay, enter transaction code below
         </p>
-        <div className="flex items-center gap-3">
-          {[0, 1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="bg-card h-14 w-16 rounded-2xl border p-3 text-center text-lg font-semibold shadow-sm"
-            />
-          ))}
-        </div>
+        <OtpInput
+          length={4}
+          error={error} // show red state when set
+          onChange={(c) => {
+            setCode(c);
+            if (error) setError(""); // clear error on change
+          }}
+          onComplete={(c) => {
+            // validate async...
+            // if invalid:
+            // setError("The code you’ve entered is invalid");
+          }}
+        />
       </div>
 
       {/* spacer */}
@@ -168,48 +148,27 @@ export default function BankilyPaymentPage() {
       {/* Sticky confirm button */}
       <div className="bg-background/95 fixed inset-x-0 bottom-0 z-20 border-t backdrop-blur">
         <div className="mx-auto w-full max-w-xl p-4">
-          <button className="w-full rounded-2xl bg-[#c44a06] px-4 py-3 text-center text-base font-semibold text-white shadow-sm hover:opacity-95">
+          <button
+            disabled={!allFilled}
+            onClick={() => {
+              // fake validation
+              if (code !== "1234") {
+                setError("The code you’ve entered is invalid");
+                return;
+              }
+              // proceed...
+            }}
+            className={[
+              "w-full rounded-2xl px-4 py-3 text-white font-semibold",
+              allFilled
+                ? "bg-[#CC4B00] hover:opacity-95"
+                : "bg-gray-200 text-gray-500 cursor-not-allowed",
+            ].join(" ")}
+          >
             Confirm payment
           </button>
         </div>
       </div>
-    </div>
-  );
-}
-
-/* =============== tiny atoms (design only) =============== */
-
-function CircleIcon({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="bg-background flex h-9 w-9 items-center justify-center rounded-full border shadow-sm">
-      {children}
-    </div>
-  );
-}
-
-function BankilyAppIcon() {
-  return (
-    <div
-      className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border"
-      style={{ background: "linear-gradient(180deg,#0a7a6f,#0b3e34)" }}
-    >
-      {/* placeholder brand block */}
-      <div className="h-8 w-8 rounded bg-emerald-400" />
-    </div>
-  );
-}
-
-function GhostTab({ label, active }: { label: string; active?: boolean }) {
-  return (
-    <div
-      className={[
-        "flex flex-1 items-center justify-center rounded-xl border px-3 py-2 text-sm",
-        active
-          ? "border-amber-400 bg-amber-50 text-amber-700"
-          : "bg-muted/30 text-muted-foreground",
-      ].join(" ")}
-    >
-      {label}
     </div>
   );
 }

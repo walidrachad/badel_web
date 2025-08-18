@@ -31,11 +31,11 @@ export default function CategoryPage() {
   const params = useParams<{ id: string }>();
   const id = Number(params.id);
   const qc = useQueryClient();
-  const router = useRouter();
   const [sheetOpen, setSheetOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [selectedGC, setSelectedGC] = useState<GiftCard | null>(null);
   const pathname = usePathname();
+  const router = useRouter();
   const cached = qc.getQueryData<Category>(["category", id]);
 
   const { data, isLoading, isError, refetch } = useQuery({
@@ -96,7 +96,7 @@ export default function CategoryPage() {
     return num ? `${num.toLocaleString("fr-FR")} MRU` : "";
   }, [selectedGC]);
   return (
-    <div className="mx-auto w-full max-w-xl sm:p-6 space-y-6">
+    <div className="mx-auto w-full max-w-xl p-4 space-y-6">
       <AppBar title={cat.name}>
         <CircleIcon>
           <svg
@@ -199,7 +199,11 @@ export default function CategoryPage() {
           <button
             disabled={!selectedGC}
             onClick={() => {
-              router.push(pathname + `/checkout`);
+              if (!selectedGC) return;
+              const price = selectedGC.amount_after_fee ?? selectedGC.amount;
+              router.push(
+                `${pathname}/checkout?catId=${cat.id}&gcId=${selectedGC.id}&price=${price}&name=${cat.name}&output=${selectedGC.output}&image=${cat.image_path}`
+              );
             }}
             className={[
               "flex-1 rounded-2xl px-4 py-3 text-center text-sm font-semibold shadow-sm transition",
