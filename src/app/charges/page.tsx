@@ -11,6 +11,8 @@ import {
 } from "@/lib/api/charge";
 import SeeMoreCard from "@/components/SeeMoreCard";
 import CategoryTile from "@/components/CategoryTile";
+import RecentActivities from "./RecentActivities";
+import BottomActionBar from "@/components/mobile/BottomActionBar";
 
 export default function ChargeScreen() {
   const { data, isLoading, isError, refetch } = useQuery({
@@ -42,47 +44,64 @@ export default function ChargeScreen() {
     );
 
   return (
-    <div className="mx-auto w-full max-w-xl p-4 space-y-6">
-      <AppBar title="Marketplace" />
-
-      {/* Hero / Apple card */}
-
-      {ordered.map((item) =>
-        "type" in item && item.type === "group" ? (
-          <Section key={item.id} title={item.name}>
-            <div className="grid grid-cols-2 gap-4">
-              {item.categories.map((cat: Category) => (
-                <CategoryTile cat={cat}>
-                  <ImageCard
-                    key={cat.id}
-                    bg={`url('https://staging.bedelportal.com/${
-                      cat.image_path
-                    }')`}
-                    title=""
-                  />
-                </CategoryTile>
-              ))}
-              <SeeMoreCard groupId={item.name} categories={item.categories} />
-            </div>
-          </Section>
-        ) : (
-          <CategoryTile cat={item}>
-            <div
-              className="rounded-2xl border p-4 sm:p-6 bg-[length:100%_100%]"
-              style={{
-                backgroundImage: `url('https://staging.bedelportal.com/${
-                  (item as any).image_path
-                }')`,
-              }}
-            >
-              <div className="aspect-[16/9] w-full rounded-2xl p-5 sm:p-7 relative overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center"></div>
+    <>
+      <div
+        className="
+        fixed inset-x-0 top-0 z-40
+        bg-white/90 backdrop-blur pt-3
+      "
+      >
+        <div className="flex h-12 items-center justify-between">
+          <h1 className="flex-1 px-2 text-center text-xl font-semibold tracking-tight">
+            Marketplace
+          </h1>
+        </div>
+      </div>
+      <div className="mx-auto w-full max-w-xl p-4 space-y-6 pt-12">
+        {/* Hero / Apple card */}
+        <RecentActivities />
+        {ordered.map((item) =>
+          "type" in item && item.type === "group" ? (
+            <Section key={item.id} title={item.name}>
+              <div className="grid grid-cols-2 gap-4">
+                {item.categories.map((cat: Category) => (
+                  <CategoryTile cat={cat}>
+                    <ImageCard
+                      key={cat.id}
+                      bg={`url('https://staging.bedelportal.com/${
+                        cat.image_path
+                      }')`}
+                      title=""
+                    />
+                  </CategoryTile>
+                ))}
+                <SeeMoreCard groupId={item.name} categories={item.categories} />
               </div>
-            </div>
-          </CategoryTile>
-        )
-      )}
-    </div>
+            </Section>
+          ) : (
+            <CategoryTile cat={item}>
+              <div
+                className="rounded-2xl border p-4 sm:p-6 bg-[length:100%_100%]"
+                style={{
+                  backgroundImage: `url('https://staging.bedelportal.com/${
+                    (item as any).image_path
+                  }')`,
+                }}
+              >
+                <div className="aspect-[16/9] w-full rounded-2xl p-5 sm:p-7 relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center"></div>
+                </div>
+              </div>
+            </CategoryTile>
+          )
+        )}
+      </div>
+      <BottomActionBar
+        homeHref="/"
+        ordersHref="/orders"
+        settingsHref="/settings"
+      />
+    </>
   );
 }
 

@@ -1,34 +1,43 @@
 // app/(dashboard)/checkout/confirm/page.tsx
-// Design-only: Tailwind UI (no data, no actions)
 "use client";
 import { useEffect, useState } from "react";
 import PhoneNumberSelect from "@/components/mobile/PhoneNumberSelect";
 import AppBar from "@/components/mobile/app_bar/AppBar";
-import PaymentMethodCards from "./PaymentMethodCards";
 import { getSelectedPhoneId } from "@/lib/phoneStorage";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import PaymentMethodCards from "./PaymentMethodCards";
+
+type Bank = {
+  id: number;
+  Sb_name: string;
+  profile_picture: string | null;
+  send_account?: string | null;
+};
 
 export default function ConfirmPaymentPage() {
   const [phoneId, setPhoneId] = useState<string | undefined>(undefined);
+  const [selectedBank, setSelectedBank] = useState<Bank | null>(null);
+
   const sp = useSearchParams();
-  const catId = sp.get("catId");
   const gcId = sp.get("gcId");
   const price = sp.get("price");
   const name = sp.get("name");
   const output = sp.get("output");
   const image = sp.get("image");
 
-  // pre-fill from last selection if you want:
   useEffect(() => {
     const last = getSelectedPhoneId();
     if (last) setPhoneId(last);
   }, []);
+
   const pathname = usePathname();
   const router = useRouter();
+
   return (
-    <div className="mx-auto w-full max-w-xl p-4 space-y-6">
+    <div className="mx-auto w-full max-w-xl p-4 space-y-6 pt-12">
       {/* Header */}
-      <AppBar title="Confirm payment"></AppBar>
+      <AppBar title="Confirm payment" />
+
       {/* Product summary row */}
       <div className="mb-4 flex items-center gap-3">
         <div
@@ -36,46 +45,54 @@ export default function ConfirmPaymentPage() {
           style={{
             backgroundImage: `url('https://staging.bedelportal.com/${image}')`,
           }}
-          //
         >
           <div className="relative h-full w-full rounded-xl bg-white/0"></div>
         </div>
 
         <div className="min-w-0">
-          <div className="truncate text-base font-semibold">
-            <h2>{name}</h2>
-          </div>
-          <div className="text-muted-foreground text-sm">
-            <p>USA • {output}</p>
-          </div>
+          <h2 className="truncate text-base font-semibold">{name}</h2>
+          <p className="text-muted-foreground text-sm">USA • {output}</p>
         </div>
       </div>
+
+      {/* Summary */}
       <div className="bg-card text-card-foreground divide-y rounded-2xl border">
-        <SummaryRow label="Subtotal" value={price + "MRU"} />
+        <SummaryRow label="Subtotal" value={price + " MRU"} />
         <SummaryRow label="Tax" value="0 MRU" />
-        <SummaryRow labelStrong="Total" valueStrong={price + "MRU"} />
+        <SummaryRow labelStrong="Total" valueStrong={price + " MRU"} />
       </div>
-      <PaymentMethodCards />
+
+      {/* Payment method cards */}
+      <PaymentMethodCards onChange={setSelectedBank} />
+
       {/* Phone select */}
       <PhoneNumberSelect
         items={[]}
         value={phoneId ?? undefined}
         onChange={setPhoneId}
       />
-      {/* spacer so sticky button doesn’t overlap content */}
+
       <div className="h-24" />
+
       {/* Sticky Pay button */}
       <div className="bg-background/95 fixed inset-x-0 bottom-0 z-20 border-t backdrop-blur">
         <div className="mx-auto w-full max-w-xl p-4">
           <button
+            disabled={!selectedBank}
             onClick={() => {
+              if (!selectedBank) return;
               router.push(
-                `${pathname}/checkout?catId=${catId}&gcId=${gcId}&price=${price}&name=${name}`
+                `${pathname}/bankily?profile_picture=${selectedBank.profile_picture}&name=${selectedBank.Sb_name}&send_account=${selectedBank.send_account}&price=${price}&gcId=${gcId}`
               );
             }}
-            className="w-full rounded-2xl bg-[#c44a06] px-4 py-3 text-center text-base font-semibold text-white shadow-sm hover:opacity-95"
+            className={[
+              "w-full rounded-2xl px-4 py-3 text-center text-base font-semibold shadow-sm transition",
+              selectedBank
+                ? "bg-[#c44a06] text-white hover:opacity-95"
+                : "cursor-not-allowed bg-gray-200 text-gray-400",
+            ].join(" ")}
           >
-            Pay • {price} MRU
+            {selectedBank ? `Pay • ${price} MRU` : "Select a payment method"}
           </button>
         </div>
       </div>
@@ -99,7 +116,7 @@ function SummaryRow({
       <div
         className={
           labelStrong
-            ? "text-base font-semibold text-[#000] "
+            ? "text-base font-semibold text-[#000]"
             : "text-muted-foreground text-base"
         }
       >
@@ -108,41 +125,12 @@ function SummaryRow({
       <div
         className={
           valueStrong
-            ? "text-base font-semibold text-[#000] "
+            ? "text-base font-semibold text-[#000]"
             : "text-base text-[#000]"
         }
       >
         {valueStrong ?? value}
       </div>
-    </div>
-  );
-}
-
-/* ---------- placeholder bank logos (design only) ---------- */
-
-function BankilyLogo() {
-  return (
-    <div className="flex items-center gap-2">
-      <div className="h-8 w-8 rounded bg-emerald-500" />
-      <div className="text-sm font-semibold">Bankily</div>
-    </div>
-  );
-}
-
-function SedadLogo({ dim }: { dim?: boolean }) {
-  return (
-    <div className={`flex items-center gap-2 ${dim ? "opacity-60" : ""}`}>
-      <div className="h-8 w-8 rounded bg-lime-500" />
-      <div className="text-sm font-semibold">SedadBank</div>
-    </div>
-  );
-}
-
-function MasrviLogo({ dim }: { dim?: boolean }) {
-  return (
-    <div className={`flex items-center gap-2 ${dim ? "opacity-60" : ""}`}>
-      <div className="h-8 w-8 rounded bg-violet-500" />
-      <div className="text-sm font-semibold">Masrvi</div>
     </div>
   );
 }

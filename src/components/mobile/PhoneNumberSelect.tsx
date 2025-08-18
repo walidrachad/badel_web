@@ -2,8 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  PHONES_KEY,
-  SELECTED_PHONE_KEY,
   getSavedPhones,
   setSavedPhones,
   setSelectedPhoneId,

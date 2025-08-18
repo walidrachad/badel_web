@@ -1,5 +1,4 @@
 // app/(dashboard)/checkout/bankily/page.tsx
-// Design-only UI for "Bankily payment" (no logic)
 "use client";
 
 import AppBar from "@/components/mobile/app_bar/AppBar";
@@ -7,18 +6,37 @@ import { useSavedPhone } from "@/hooks/useSavedPhone";
 import PaymentFlowRow from "./PaymentFlowRow";
 import OtpInput from "./OtpInput";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function BankilyPaymentPage() {
   const { selected } = useSavedPhone();
+  const sp = useSearchParams();
+
+  // values جايين من route
+  const profile_picture = sp.get("profile_picture"); // bank.profile_picture
+  const name = sp.get("name"); // bank.name
+  const send_account = sp.get("send_account"); // bank.send_account
+  const price = sp.get("price"); // باش نحتافظو بثمن العملية
+  const [copied, setCopied] = useState(false); // snackbar state
 
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
 
   const allFilled = code.length === 4;
+
+  // function copy to clipboard
+  const handleCopy = async () => {
+    if (send_account) {
+      await navigator.clipboard.writeText(send_account);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500); // hide after 2.5s
+    }
+  };
+
   return (
-    <div className="w-full">
+    <div className="w-full pt-12">
       {/* Header */}
-      <div className="px-4">
+      <div className="px-4 pt-4">
         <AppBar title="Bankily payment"></AppBar>
       </div>
       <p className="text-muted-foreground text-sm px-4">
@@ -29,8 +47,12 @@ export default function BankilyPaymentPage() {
       <div className="bg-card mt-4 border p-4 bg-[#F9F9FB]">
         <div className="mx-auto max-w-2xl">
           <PaymentFlowRow
-            appImage="/images/demo/image_1.png"
-            appLabel="Bankily"
+            appImage={
+              profile_picture
+                ? `https://staging.bedelportal.com/${profile_picture}`
+                : "/images/demo/fallback.png"
+            }
+            appLabel={name ?? "Bankily"}
             flowImage="/images/demo/bankily.png"
             highlight
           />
@@ -47,9 +69,12 @@ export default function BankilyPaymentPage() {
               <div className="text-muted-foreground text-sm">Merchant code</div>
               <div className="flex items-center justify-between gap-3 rounded-xl border px-3 py-2">
                 <div className="truncate text-base font-semibold">
-                  BEDEL SARL - 017890
+                  {send_account ?? "N/A"}
                 </div>
-                <button className="bg-muted inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs">
+                <button
+                  onClick={handleCopy}
+                  className="bg-[#F0F0F3] inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs"
+                >
                   <svg viewBox="0 0 24 24" width="14" height="14">
                     <rect
                       x="9"
@@ -79,7 +104,7 @@ export default function BankilyPaymentPage() {
               <div className="space-y-1">
                 <div className="text-muted-foreground text-sm">Amount</div>
                 <div className="rounded-xl border px-3 py-2 text-lg font-semibold">
-                  4 800.00
+                  {price ?? "0.00"}
                 </div>
               </div>
               <div className="text-muted-foreground pb-2 text-sm font-medium">
@@ -88,6 +113,7 @@ export default function BankilyPaymentPage() {
             </div>
           </div>
         </div>
+
         <br />
         <div className="bg-background rounded-xl border p-3 shadow-lg bg-white">
           <div className="flex items-center justify-between">
@@ -129,15 +155,13 @@ export default function BankilyPaymentPage() {
         </p>
         <OtpInput
           length={4}
-          error={error} // show red state when set
+          error={error}
           onChange={(c) => {
             setCode(c);
-            if (error) setError(""); // clear error on change
+            if (error) setError("");
           }}
           onComplete={(c) => {
-            // validate async...
-            // if invalid:
-            // setError("The code you’ve entered is invalid");
+            // validate async
           }}
         />
       </div>
@@ -151,7 +175,6 @@ export default function BankilyPaymentPage() {
           <button
             disabled={!allFilled}
             onClick={() => {
-              // fake validation
               if (code !== "1234") {
                 setError("The code you’ve entered is invalid");
                 return;
@@ -169,6 +192,11 @@ export default function BankilyPaymentPage() {
           </button>
         </div>
       </div>
+      {copied && (
+        <div className="fixed bottom-24 left-1/2 z-50 -translate-x-1/2 transform rounded-lg bg-black px-4 py-2 text-sm text-white shadow-lg">
+          Copied to clipboard
+        </div>
+      )}
     </div>
   );
 }

@@ -6,10 +6,9 @@ import { useEffect, useMemo, useState } from "react";
 type Bank = {
   id: number;
   Sb_name: string;
-  profile_picture: string | null; // "assets/images/brand_icons/bankily.png"
-  instruction_image?: string | null;
-  instruction_pdf?: string | null;
-  // ...other fields omitted
+  profile_picture: string | null;
+  prefix: string;
+  send_account: string;
 };
 
 type ApiResp = {

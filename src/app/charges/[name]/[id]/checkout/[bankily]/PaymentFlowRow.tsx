@@ -25,8 +25,8 @@ export default function PaymentFlowRow({
       ].join(" ")}
     >
       {/* Left: app card */}
-      <div className="flex w-[84px] sm:w-[96px] flex-col items-center">
-        <div className="relative aspect-[1/1.05] w-full overflow-hidden rounded-2xl shadow">
+      <div className="flex w-[84px]  flex-col items-center">
+        <div className="relative aspect-[1/1.05] w-full overflow-hidden rounded-xl shadow">
           <img
             src={appImage}
             alt={appLabel}

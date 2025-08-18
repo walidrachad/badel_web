@@ -96,7 +96,7 @@ export default function CategoryPage() {
     return num ? `${num.toLocaleString("fr-FR")} MRU` : "";
   }, [selectedGC]);
   return (
-    <div className="mx-auto w-full max-w-xl p-4 space-y-6">
+    <div className="mx-auto w-full max-w-xl p-4 space-y-6 pt-16">
       <AppBar title={cat.name}>
         <CircleIcon>
           <svg
