@@ -1,9 +1,9 @@
 "use client";
 
-import { ChevronUpIcon } from "@/assets/icons";
-import { cn } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { ChevronUpIcon } from "@/assets/icons";
+import { cn } from "@/lib/utils";
 import { Dropdown, DropdownContent, DropdownTrigger } from "./ui/dropdown";
 
 type PropsType<TItem> = {

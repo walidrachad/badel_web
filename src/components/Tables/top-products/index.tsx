@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   Table,
   TableBody,
@@ -6,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Image from "next/image";
 import { getTopProducts } from "../fetch";
 
 export async function TopProducts() {

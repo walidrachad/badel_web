@@ -1,10 +1,10 @@
 // app/(dashboard)/checkout/confirm/page.tsx
 "use client";
-import { useEffect, useState } from "react";
-import PhoneNumberSelect from "@/components/mobile/PhoneNumberSelect";
-import AppBar from "@/components/mobile/app_bar/AppBar";
-import { getSelectedPhoneId } from "@/lib/phoneStorage";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import AppBar from "@/components/mobile/app_bar/AppBar";
+import PhoneNumberSelect from "@/components/mobile/PhoneNumberSelect";
+import { getSelectedPhoneId } from "@/lib/phoneStorage";
 import PaymentMethodCards from "./PaymentMethodCards";
 
 type Bank = {

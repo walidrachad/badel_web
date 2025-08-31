@@ -1,6 +1,6 @@
+import { useId } from "react";
 import { CheckIcon, XIcon } from "@/assets/icons";
 import { cn } from "@/lib/utils";
-import { useId } from "react";
 
 type PropsType = {
   withIcon?: boolean;

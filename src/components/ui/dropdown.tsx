@@ -1,8 +1,5 @@
 "use client";
 
-import { useClickOutside } from "@/hooks/use-click-outside";
-import { cn } from "@/lib/utils";
-import { SetStateActionType } from "@/types/set-state-action-type";
 import {
   createContext,
   type PropsWithChildren,
@@ -10,6 +7,9 @@ import {
   useEffect,
   useRef,
 } from "react";
+import { useClickOutside } from "@/hooks/use-click-outside";
+import { cn } from "@/lib/utils";
+import { SetStateActionType } from "@/types/set-state-action-type";
 
 type DropdownContextType = {
   isOpen: boolean;

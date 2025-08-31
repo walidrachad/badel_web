@@ -1,8 +1,8 @@
 "use client";
 
+import { useEffect, useId, useState } from "react";
 import { ChevronUpIcon } from "@/assets/icons";
 import { cn } from "@/lib/utils";
-import { useEffect, useId, useState } from "react";
 
 type PropsType = {
   label: string;

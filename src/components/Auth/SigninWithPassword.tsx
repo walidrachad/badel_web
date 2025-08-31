@@ -1,9 +1,9 @@
 "use client";
-import { EmailIcon, PasswordIcon } from "@/assets/icons";
 import Link from "next/link";
 import React, { useState } from "react";
-import InputGroup from "../FormElements/InputGroup";
+import { EmailIcon, PasswordIcon } from "@/assets/icons";
 import { Checkbox } from "../FormElements/checkbox";
+import InputGroup from "../FormElements/InputGroup";
 
 export default function SigninWithPassword() {
   const [data, setData] = useState({

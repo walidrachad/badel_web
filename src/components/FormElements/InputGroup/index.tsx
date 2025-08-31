@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import { type HTMLInputTypeAttribute, useId } from "react";
+import { cn } from "@/lib/utils";
 
 type InputGroupProps = {
   className?: string;
