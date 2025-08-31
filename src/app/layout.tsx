@@ -1,36 +1,26 @@
-import "@/css/satoshi.css";
-import "@/css/style.css";
+import type { Metadata } from 'next'
+import type { PropsWithChildren } from 'react'
 
-import "flatpickr/dist/flatpickr.min.css";
-import "jsvectormap/dist/jsvectormap.css";
+import '@/css/style.css'
 
-import type { Metadata } from "next";
-import NextTopLoader from "nextjs-toploader";
-import type { PropsWithChildren } from "react";
-import { Providers } from "./providers";
+import { Providers } from './providers'
 
 export const metadata: Metadata = {
-  title: {
-    template: "%s | NextAdmin - Next.js Dashboard Kit",
-    default: "NextAdmin - Next.js Dashboard Kit",
-  },
-  description:
-    "Next.js admin dashboard toolkit with 200+ templates, UI components, and integrations for fast dashboard development.",
-};
+	title: {
+		template: '%s | Bedel Charge',
+		default: 'Bedel Charge',
+	},
+	description: '',
+}
 
 export default function RootLayout({ children }: PropsWithChildren) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-        <Providers>
-          <NextTopLoader color="#ffffff" showSpinner={false} />
-
-          <div className="flex w-full bg-white">
-            {/* <Sidebar /> */}
-            {children}
-          </div>
-        </Providers>
-      </body>
-    </html>
-  );
+	return (
+		<html lang="fr" suppressHydrationWarning>
+			<body>
+				<Providers>
+					<div className="flex w-full bg-white">{children}</div>
+				</Providers>
+			</body>
+		</html>
+	)
 }
