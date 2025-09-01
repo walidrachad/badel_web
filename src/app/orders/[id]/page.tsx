@@ -1,12 +1,11 @@
-// app/(dashboard)/orders/[id]/page.tsx
-// Design-only detail with status variants (Pending / Canceled / Completed)
-
 import Link from 'next/link'
+
 import { ORDERS, OrderStatus } from '../mock'
 
-type Props = { params: { id: string } }
+type Props = { params: Promise<{ id: string }> }
 
-export default function OrderDetailPage({ params }: Props) {
+export default async function OrderDetailPage(props: Props) {
+	const params = await props.params
 	const order = ORDERS.find((o) => o.id === params.id)
 
 	if (!order) {
