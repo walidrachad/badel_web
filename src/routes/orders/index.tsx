@@ -1,26 +1,26 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import AppBar from '~/components/mobile/app_bar/AppBar'
-import CircleIcon from '~/components/mobile/CircleIcon'
+import { CircleIcon } from 'lucide-react'
+
+import AppBar from '~/components/app-bar'
+
 import { ORDERS, Order, OrderStatus } from './-mock'
+import { createFileRoute, Link } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/orders/')({
+	component: Orders,
+})
 
 // util: format amount with spaces like "4 200 MRU"
 function formatMRU(n: number) {
 	return `${n.toLocaleString('fr-FR').replace(/\u00A0/g, ' ')} MRU`
 }
 
-export default function OrdersPage() {
+function Orders() {
 	return (
 		<div className="w-full pt-13">
 			{/* Header */}
 			<AppBar title="My orders">
 				<CircleIcon>
-					<Image
-						src="/icons/filter_icon.svg"
-						alt="Menu"
-						width={16}
-						height={16}
-					/>
+					<img src="/icons/filter_icon.svg" alt="Menu" width={16} height={16} />
 				</CircleIcon>
 			</AppBar>
 
@@ -43,7 +43,11 @@ function OrderRow({ order }: { order: Order }) {
 	})} ${created.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}`
 
 	return (
-		<Link href={`/orders/${order.id}`} className="hover:bg-accent/30 block">
+		<Link
+			to={`/orders/$id`}
+			params={{ id: order.id }}
+			className="hover:bg-accent/30 block"
+		>
 			<div className="flex gap-3 px-4 py-3">
 				<BrandThumb bg={`url('${order.image}')`} />
 

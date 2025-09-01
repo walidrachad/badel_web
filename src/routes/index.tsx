@@ -3,12 +3,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 
-import CategoryTile from '~/components/CategoryTile'
-import BottomActionBar from '~/components/mobile/BottomActionBar'
-import SeeMoreCard from '~/components/SeeMoreCard'
+import CategoryTile from '~/components/category-title'
+import BottomActionBar from '~/components/bottom-action-bar'
+import SeeMoreCard from '~/components/see-more-card'
 import { Category, getChargePageItems, GroupItem } from '~/lib/api/charge'
 
-import RecentActivities from '../components/RecentActivities'
+import RecentActivities from '../components/recent-activities'
 
 export const Route = createFileRoute('/')({
 	component: Home,

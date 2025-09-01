@@ -1,0 +1,39 @@
+import { useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
+import { ReactNode } from 'react'
+import type { Category } from '~/lib/api/charge'
+
+export default function CategoryTile({
+	cat,
+	children,
+}: {
+	cat: any
+	children?: ReactNode
+}) {
+	const navigate = useNavigate()
+	const queryClient = useQueryClient()
+
+	const go = () => {
+		queryClient.setQueryData<Category>(['category', cat.id], cat)
+
+		navigate({
+			to: '/charges/$name/$id',
+			params: {
+				id: cat.id,
+				name: 'category',
+			},
+		})
+	}
+
+	// const src = cat.small_image
+	// 	? new URL(cat.small_image, 'https://staging.bedelportal.com/').toString()
+	// 	: cat.image_path
+	// 		? new URL(cat.image_path, 'https://staging.bedelportal.com/').toString()
+	// 		: '/images/demo/fallback.png'
+
+	return (
+		<button className="w-full" onClick={go}>
+			{children}
+		</button>
+	)
+}

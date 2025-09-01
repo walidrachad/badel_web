@@ -10,43 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ChargesNameRouteImport } from './routes/charges.$name'
+import { Route as OrdersIndexRouteImport } from './routes/orders/index'
+import { Route as CheckoutIndexRouteImport } from './routes/checkout/index'
+import { Route as OrdersIdRouteImport } from './routes/orders/$id'
+import { Route as CheckoutWalletIndexRouteImport } from './routes/checkout/$wallet/index'
+import { Route as ChargesNameIndexRouteImport } from './routes/charges.$name/index'
+import { Route as ChargesNameIdIndexRouteImport } from './routes/charges.$name/$id/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ChargesNameRoute = ChargesNameRouteImport.update({
-  id: '/charges/$name',
-  path: '/charges/$name',
+const OrdersIndexRoute = OrdersIndexRouteImport.update({
+  id: '/orders/',
+  path: '/orders/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutIndexRoute = CheckoutIndexRouteImport.update({
+  id: '/checkout/',
+  path: '/checkout/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersIdRoute = OrdersIdRouteImport.update({
+  id: '/orders/$id',
+  path: '/orders/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutWalletIndexRoute = CheckoutWalletIndexRouteImport.update({
+  id: '/checkout/$wallet/',
+  path: '/checkout/$wallet/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChargesNameIndexRoute = ChargesNameIndexRouteImport.update({
+  id: '/charges/$name/',
+  path: '/charges/$name/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChargesNameIdIndexRoute = ChargesNameIdIndexRouteImport.update({
+  id: '/charges/$name/$id/',
+  path: '/charges/$name/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/charges/$name': typeof ChargesNameRoute
+  '/orders/$id': typeof OrdersIdRoute
+  '/checkout': typeof CheckoutIndexRoute
+  '/orders': typeof OrdersIndexRoute
+  '/charges/$name': typeof ChargesNameIndexRoute
+  '/checkout/$wallet': typeof CheckoutWalletIndexRoute
+  '/charges/$name/$id': typeof ChargesNameIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/charges/$name': typeof ChargesNameRoute
+  '/orders/$id': typeof OrdersIdRoute
+  '/checkout': typeof CheckoutIndexRoute
+  '/orders': typeof OrdersIndexRoute
+  '/charges/$name': typeof ChargesNameIndexRoute
+  '/checkout/$wallet': typeof CheckoutWalletIndexRoute
+  '/charges/$name/$id': typeof ChargesNameIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/charges/$name': typeof ChargesNameRoute
+  '/orders/$id': typeof OrdersIdRoute
+  '/checkout/': typeof CheckoutIndexRoute
+  '/orders/': typeof OrdersIndexRoute
+  '/charges/$name/': typeof ChargesNameIndexRoute
+  '/checkout/$wallet/': typeof CheckoutWalletIndexRoute
+  '/charges/$name/$id/': typeof ChargesNameIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/charges/$name'
+  fullPaths:
+    | '/'
+    | '/orders/$id'
+    | '/checkout'
+    | '/orders'
+    | '/charges/$name'
+    | '/checkout/$wallet'
+    | '/charges/$name/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/charges/$name'
-  id: '__root__' | '/' | '/charges/$name'
+  to:
+    | '/'
+    | '/orders/$id'
+    | '/checkout'
+    | '/orders'
+    | '/charges/$name'
+    | '/checkout/$wallet'
+    | '/charges/$name/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/orders/$id'
+    | '/checkout/'
+    | '/orders/'
+    | '/charges/$name/'
+    | '/checkout/$wallet/'
+    | '/charges/$name/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ChargesNameRoute: typeof ChargesNameRoute
+  OrdersIdRoute: typeof OrdersIdRoute
+  CheckoutIndexRoute: typeof CheckoutIndexRoute
+  OrdersIndexRoute: typeof OrdersIndexRoute
+  ChargesNameIndexRoute: typeof ChargesNameIndexRoute
+  CheckoutWalletIndexRoute: typeof CheckoutWalletIndexRoute
+  ChargesNameIdIndexRoute: typeof ChargesNameIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,11 +130,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/charges/$name': {
-      id: '/charges/$name'
+    '/orders/': {
+      id: '/orders/'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout/': {
+      id: '/checkout/'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/orders/$id': {
+      id: '/orders/$id'
+      path: '/orders/$id'
+      fullPath: '/orders/$id'
+      preLoaderRoute: typeof OrdersIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout/$wallet/': {
+      id: '/checkout/$wallet/'
+      path: '/checkout/$wallet'
+      fullPath: '/checkout/$wallet'
+      preLoaderRoute: typeof CheckoutWalletIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/charges/$name/': {
+      id: '/charges/$name/'
       path: '/charges/$name'
       fullPath: '/charges/$name'
-      preLoaderRoute: typeof ChargesNameRouteImport
+      preLoaderRoute: typeof ChargesNameIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/charges/$name/$id/': {
+      id: '/charges/$name/$id/'
+      path: '/charges/$name/$id'
+      fullPath: '/charges/$name/$id'
+      preLoaderRoute: typeof ChargesNameIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -70,7 +177,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ChargesNameRoute: ChargesNameRoute,
+  OrdersIdRoute: OrdersIdRoute,
+  CheckoutIndexRoute: CheckoutIndexRoute,
+  OrdersIndexRoute: OrdersIndexRoute,
+  ChargesNameIndexRoute: ChargesNameIndexRoute,
+  CheckoutWalletIndexRoute: CheckoutWalletIndexRoute,
+  ChargesNameIdIndexRoute: ChargesNameIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

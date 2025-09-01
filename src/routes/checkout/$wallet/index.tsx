@@ -1,24 +1,30 @@
-'use client'
-
-import { useSearchParams } from 'next/navigation'
+import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 
-import AppBar from '~/components/mobile/app_bar/AppBar'
-import { useSavedPhone } from '~/hooks/useSavedPhone'
+import AppBar from '~/components/app-bar'
+import { useSavedPhone } from '~/hooks/use-saved-phone'
 
 import OtpInput from './-components/otp-input'
 import PaymentFlowRow from './-components/payment-flow-row'
+import z from 'zod'
 
-export default function BankilyPaymentPage() {
+const walletSearchSchema = z.object({
+	profile_picture: z.number().catch(1),
+	price: z.string().catch(''),
+	name: z.string().catch(''),
+	send_account: z.string().catch(''),
+})
+
+export const Route = createFileRoute('/checkout/$wallet/')({
+	validateSearch: (search) => walletSearchSchema.parse(search),
+	component: Wallet,
+})
+
+export default function Wallet() {
 	const { selected } = useSavedPhone()
-	const sp = useSearchParams()
+	const { name, price, profile_picture, send_account } = Route.useSearch()
 
-	// values جايين من route
-	const profile_picture = sp.get('profile_picture') // bank.profile_picture
-	const name = sp.get('name') // bank.name
-	const send_account = sp.get('send_account') // bank.send_account
-	const price = sp.get('price') // باش نحتافظو بثمن العملية
-	const [copied, setCopied] = useState(false) // snackbar state
+	const [copied, setCopied] = useState(false)
 
 	const [code, setCode] = useState('')
 	const [error, setError] = useState('')

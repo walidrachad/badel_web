@@ -10,7 +10,8 @@
     "build": "vite build",
     "start": "node .output/server/index.mjs",
     "lint": "eslint .",
-    "prettier": "prettier --write --ignore-unknown ."
+    "prettier": "prettier --write --ignore-unknown .",
+    "check-types": "tsc --pretty --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",

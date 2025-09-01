@@ -1,11 +1,20 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import z from 'zod'
 
-import CategoryTile from '~/components/CategoryTile'
-import AppBar from '~/components/mobile/app_bar/AppBar'
+import CategoryTile from '~/components/category-title'
+import AppBar from '~/components/app-bar'
 import { getChargePageItems, type Category } from '~/lib/api/charge'
 import { cn } from '~/lib/utils'
+
+const chargeSearchSchema = z.object({
+	groupId: z.string().catch(''),
+})
+
+export const Route = createFileRoute('/charges/$name/')({
+	validateSearch: (search) => chargeSearchSchema.parse(search),
+	component: Charge,
+})
 
 /* ---------- helpers ---------- */
 const fullUrl = (p?: string | null) =>
@@ -29,7 +38,7 @@ function ImageCard({
 	href?: string
 }) {
 	return (
-		<Link href={href} className="hover:bg-accent/30 block">
+		<Link to={href} className="hover:bg-accent/30 block">
 			<div className={`${rounded} overflow-hidden border shadow-sm`}>
 				<div
 					className={`w-full bg-[length:100%_100%] bg-center ${className || 'h-44'}`}
@@ -44,10 +53,9 @@ function ImageCard({
 }
 
 /* ---------- page ---------- */
-export default function GamingCategoriesPage() {
-	const sp = useSearchParams()
-	const groupId = String(sp.get('groupId'))
+function Charge() {
 	const qc = useQueryClient()
+	const { groupId } = Route.useSearch()
 
 	const cached = qc.getQueryData<Category[]>(['groupCategories', groupId]) ?? []
 

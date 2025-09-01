@@ -1,10 +1,11 @@
-// app/(dashboard)/checkout/confirm/page.tsx
-'use client'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import AppBar from '~/components/mobile/app_bar/AppBar'
-import PhoneNumberSelect from '~/components/mobile/PhoneNumberSelect'
-import { getSelectedPhoneId } from '~/lib/phoneStorage'
+import { z } from 'zod'
+
+import AppBar from '~/components/app-bar'
+import PhoneNumberSelect from '~/components/phone-number-select'
+import { getSelectedPhoneId } from '~/lib/phone-storage'
+
 import PaymentMethodCards from './-payment-method-cards'
 
 type Bank = {
@@ -14,24 +15,32 @@ type Bank = {
 	send_account?: string | null
 }
 
-export default function ConfirmPaymentPage() {
+const checkoutSearchSchema = z.object({
+	gcId: z.number().catch(1),
+	price: z.string().catch(''),
+	name: z.string().catch(''),
+	output: z.string().optional().nullable(),
+	image: z.string().nullable(),
+	catId: z.number(),
+})
+
+export const Route = createFileRoute('/checkout/')({
+	validateSearch: (search) => checkoutSearchSchema.parse(search),
+	component: Checkout,
+})
+
+function Checkout() {
 	const [phoneId, setPhoneId] = useState<string | undefined>(undefined)
 	const [selectedBank, setSelectedBank] = useState<Bank | null>(null)
 
-	const sp = useSearchParams()
-	const gcId = sp.get('gcId')
-	const price = sp.get('price')
-	const name = sp.get('name')
-	const output = sp.get('output')
-	const image = sp.get('image')
+	const { gcId, price, name, output, image } = Route.useSearch()
 
 	useEffect(() => {
 		const last = getSelectedPhoneId()
 		if (last) setPhoneId(last)
 	}, [])
 
-	const pathname = usePathname()
-	const router = useRouter()
+	const navigate = useNavigate()
 
 	return (
 		<div className="mx-auto w-full max-w-xl space-y-6 p-4 pt-12">
@@ -81,9 +90,9 @@ export default function ConfirmPaymentPage() {
 						disabled={!selectedBank}
 						onClick={() => {
 							if (!selectedBank) return
-							router.push(
-								`${pathname}/bankily?profile_picture=${selectedBank.profile_picture}&name=${selectedBank.Sb_name}&send_account=${selectedBank.send_account}&price=${price}&gcId=${gcId}`,
-							)
+							navigate({
+								to: `bankily?profile_picture=${selectedBank.profile_picture}&name=${selectedBank.Sb_name}&send_account=${selectedBank.send_account}&price=${price}&gcId=${gcId}`,
+							})
 						}}
 						className={[
 							'w-full rounded-2xl px-4 py-3 text-center text-base font-semibold shadow-sm transition',

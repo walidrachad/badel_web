@@ -1,18 +1,20 @@
-import Link from 'next/link'
+import { createFileRoute, Link } from '@tanstack/react-router'
 
 import { ORDERS, OrderStatus } from './-mock'
 
-type Props = { params: Promise<{ id: string }> }
+export const Route = createFileRoute('/orders/$id')({
+	component: OrderDetail,
+})
 
-export default async function OrderDetailPage(props: Props) {
-	const params = await props.params
+function OrderDetail() {
+	const params = Route.useParams()
 	const order = ORDERS.find((o) => o.id === params.id)
 
 	if (!order) {
 		return (
 			<div className="mx-auto w-full max-w-xl p-4">
 				<p>Order not found.</p>
-				<Link href="/orders" className="mt-3 inline-block underline">
+				<Link to="/orders" className="mt-3 inline-block underline">
 					Back to orders
 				</Link>
 			</div>
@@ -27,7 +29,7 @@ export default async function OrderDetailPage(props: Props) {
 			<div className={`${ui.header} sticky top-0 z-10 px-4 py-3 text-white`}>
 				<div className="mx-auto flex max-w-xl items-center justify-between">
 					<Link
-						href="/orders"
+						to="/orders"
 						className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20"
 					>
 						<svg

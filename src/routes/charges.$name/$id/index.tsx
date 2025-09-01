@@ -1,27 +1,25 @@
-// src/app/charges/category/[id]/page.tsx
-'use client'
-
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useParams, usePathname, useRouter } from 'next/navigation'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { GlobeIcon } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
-import { GlobeIcon } from '~/assets/icons'
-import BottomSheet from '~/components/BottomSheet'
-import { Select } from '~/components/FormElements/select'
-import AppBar from '~/components/mobile/app_bar/AppBar'
-import { getChargePageItems, GroupItem, type Category } from '~/lib/api/charge'
+import BottomSheet from '~/components/bottom-sheet'
+import { Select } from '~/components/select'
+import AppBar from '~/components/app-bar'
+import { getChargePageItems, type Category } from '~/lib/api/charge'
 import {
-	uniqueCountriesFromGiftcards,
 	codeToFlagEmoji,
 	codeToName,
+	uniqueCountriesFromGiftcards,
 } from '~/lib/country'
+import { ChargeItem, GiftCard } from '~/types/charge'
 
-import GiftcardGrid, { GiftCard } from './-gift-card-grid'
+import GiftcardGrid from './-gift-card-grid'
 
 const fullUrl = (p?: string | null) =>
 	p ? new URL(p, 'https://staging.bedelportal.com/').toString() : null
 
-function flattenCategories(items: GroupItem[]): Category[] {
+function flattenCategories(items: ChargeItem[]): Category[] {
 	const out: Category[] = []
 	for (const it of items) {
 		if ('type' in it && it.type === 'group') out.push(...it.categories)
@@ -30,15 +28,19 @@ function flattenCategories(items: GroupItem[]): Category[] {
 	return out
 }
 
-export default function CategoryPage() {
-	const params = useParams<{ id: string }>()
-	const id = Number(params.id)
+export const Route = createFileRoute('/charges/$name/$id/')({
+	component: CategoryPage,
+})
+
+function CategoryPage() {
 	const qc = useQueryClient()
+	const navigate = useNavigate()
+	const { id } = Route.useParams()
+
 	const [sheetOpen, setSheetOpen] = useState(false)
 	const [selectedCountry, setSelectedCountry] = useState<string | null>(null)
 	const [selectedGC, setSelectedGC] = useState<GiftCard | null>(null)
-	const pathname = usePathname()
-	const router = useRouter()
+
 	const cached = qc.getQueryData<Category>(['category', id])
 
 	const { data, isLoading, isError, refetch } = useQuery({
@@ -46,7 +48,7 @@ export default function CategoryPage() {
 		queryFn: async () => {
 			if (cached) return cached
 			const items = await getChargePageItems()
-			const cat = flattenCategories(items).find((c) => c.id === id)
+			const cat = flattenCategories(items).find((c) => c.id === Number(id))
 			return cat ?? null
 		},
 		initialData: cached ?? null,
@@ -192,10 +194,7 @@ export default function CategoryPage() {
           </div>
         )}
       </section> */}
-			<GiftcardGrid
-				giftcards={filteredGiftcards ?? []}
-				onChange={setSelectedGC}
-			/>
+			<GiftcardGrid giftcards={filteredGiftcards} onChange={setSelectedGC} />
 			<div className="h-24" />
 			{/* Sticky footer CTA */}
 			<div className="bg-background/95 fixed inset-x-0 bottom-0 z-20 border-t backdrop-blur">
@@ -205,9 +204,18 @@ export default function CategoryPage() {
 						onClick={() => {
 							if (!selectedGC) return
 							const price = selectedGC.amount_after_fee ?? selectedGC.amount
-							router.push(
-								`${pathname}/checkout?catId=${cat.id}&gcId=${selectedGC.id}&price=${price}&name=${cat.name}&output=${selectedGC.output}&image=${cat.image_path}`,
-							)
+
+							navigate({
+								to: '/checkout',
+								search: {
+									gcId: selectedGC.id,
+									catId: cat.id,
+									price: price,
+									name: cat.name,
+									output: selectedGC.output,
+									image: cat.image_path,
+								},
+							})
 						}}
 						className={[
 							'flex-1 rounded-2xl px-4 py-3 text-center text-sm font-semibold shadow-sm transition',

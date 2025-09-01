@@ -1,8 +1,3 @@
-// src/components/PaymentFlowRow.tsx
-'use client'
-
-import Image from 'next/image'
-
 type Props = {
 	appImage: string // مثال: "/images/bankily.png"
 	appLabel?: string // مثال: "Bankily"
@@ -28,7 +23,7 @@ export default function PaymentFlowRow({
 			{/* Left: app card */}
 			<div className="flex w-[84px] flex-col items-center">
 				<div className="relative aspect-[1/1.05] w-full overflow-hidden rounded-xl shadow">
-					<Image
+					<img
 						src={appImage}
 						alt={appLabel}
 						className="h-full w-full object-cover"
@@ -78,7 +73,7 @@ export default function PaymentFlowRow({
 			{/* Right: whole flow image (one image) */}
 			<div>
 				<div className="relative w-full">
-					<Image src={flowImage} alt="Payment flow" className="" />
+					<img src={flowImage} alt="Payment flow" className="" />
 				</div>
 			</div>
 		</div>

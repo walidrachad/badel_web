@@ -1,6 +1,3 @@
-'use client'
-
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 type Bank = {
@@ -114,7 +111,7 @@ export default function PaymentMethodCards({
 							key={b.id}
 							name={prettyName(b.Sb_name)}
 							logo={
-								<Image
+								<img
 									src={fullUrl(b.profile_picture)}
 									alt={b.Sb_name}
 									className="h-8 w-auto object-contain"
