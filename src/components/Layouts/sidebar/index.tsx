@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { Logo } from '@/components/logo'
-import { cn } from '@/lib/utils'
+import { Logo } from '~/components/logo'
+import { cn } from '~/lib/utils'
 
 import { NAV_DATA } from './data'
 import { ArrowLeftIcon, ChevronUp } from './icons'

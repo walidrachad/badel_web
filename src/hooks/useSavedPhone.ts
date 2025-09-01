@@ -1,20 +1,20 @@
-"use client";
-import { useEffect, useState } from "react";
+'use client'
+import { useEffect, useState } from 'react'
 import {
-  getSavedPhones,
-  getSelectedPhoneId,
-  type PhoneItem,
-} from "@/lib/phoneStorage";
+	getSavedPhones,
+	getSelectedPhoneId,
+	type PhoneItem,
+} from '~/lib/phoneStorage'
 
 export function useSavedPhone() {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [phones, setPhones] = useState<PhoneItem[]>([]);
+	const [selectedId, setSelectedId] = useState<string | null>(null)
+	const [phones, setPhones] = useState<PhoneItem[]>([])
 
-  useEffect(() => {
-    setSelectedId(getSelectedPhoneId());
-    setPhones(getSavedPhones());
-  }, []);
+	useEffect(() => {
+		setSelectedId(getSelectedPhoneId())
+		setPhones(getSavedPhones())
+	}, [])
 
-  const selected = phones.find((p) => p.id === selectedId) || null;
-  return { selectedId, selected, phones };
+	const selected = phones.find((p) => p.id === selectedId) || null
+	return { selectedId, selected, phones }
 }

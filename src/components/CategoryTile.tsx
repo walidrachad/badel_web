@@ -3,13 +3,14 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { ReactNode } from 'react'
-import type { Category } from '@/lib/api/charge'
+import type { Category } from '~/lib/api/charge'
 
 export default function CategoryTile({
 	cat,
 	children,
 }: {
-	cat: Category
+	// cat: Category
+	cat: any
 	children?: ReactNode
 }) {
 	const router = useRouter()
