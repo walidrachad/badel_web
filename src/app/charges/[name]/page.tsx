@@ -131,10 +131,7 @@ export default function GamingCategoriesPage() {
       ) : (
         <div className="space-y-4">
           {data.map((cat) => {
-            const src =
-              fullUrl(cat.small_image) ??
-              fullUrl(cat.image_path) ??
-              "/images/demo/fallback.png"; // safe fallback
+            const src = "/images/demo/frame_275_2.png"; // safe fallback
             return (
               <CategoryTile cat={cat}>
                 <ImageCard

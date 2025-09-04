@@ -68,9 +68,10 @@ export default function ChargeScreen() {
                   <CategoryTile cat={cat}>
                     <ImageCard
                       key={cat.id}
-                      bg={`url('https://staging.bedelportal.com/${
-                        cat.image_path
-                      }')`}
+                      // bg={`url('https://staging.bedelportal.com/${
+                      //   cat.image_path
+                      // }')`}
+                      bg={`url('${cat.image_path}')`}
                       title=""
                     />
                   </CategoryTile>
@@ -83,9 +84,7 @@ export default function ChargeScreen() {
               <div
                 className="rounded-2xl border p-4 sm:p-6 bg-[length:100%_100%]"
                 style={{
-                  backgroundImage: `url('https://staging.bedelportal.com/${
-                    (item as any).image_path
-                  }')`,
+                  backgroundImage: `url('${(item as any).image_path}')`,
                 }}
               >
                 <div className="aspect-[16/9] w-full rounded-2xl p-5 sm:p-7 relative overflow-hidden">

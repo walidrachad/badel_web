@@ -72,10 +72,7 @@ export default function CategoryPage() {
     );
 
   const cat = data as Category;
-  const heroSrc =
-    fullUrl(cat.small_image) ??
-    fullUrl(cat.image_path) ??
-    "/images/demo/fallback.png";
+  const heroSrc = "/images/demo/frame_275_2.png";
   const giftcards = cat.giftcards ?? [];
   const countryCodes = uniqueCountriesFromGiftcards(cat.giftcards ?? []);
   const selectItems = countryCodes.map((code) => ({
