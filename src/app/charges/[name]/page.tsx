@@ -8,6 +8,7 @@ import AppBar from "@/components/mobile/app_bar/AppBar";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import CategoryTile from "@/components/CategoryTile";
+import BottomActionBar from "@/components/mobile/BottomActionBar";
 
 /* ---------- helpers ---------- */
 const fullUrl = (p?: string | null) =>
@@ -147,6 +148,11 @@ export default function GamingCategoriesPage() {
           })}
         </div>
       )}
+      <BottomActionBar
+        homeHref="/"
+        ordersHref="/orders"
+        settingsHref="/settings"
+      />
     </div>
   );
 }
