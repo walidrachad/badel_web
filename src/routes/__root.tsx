@@ -61,22 +61,8 @@ export const Route = createRootRouteWithContext<{
 		)
 	},
 	notFoundComponent: () => <NotFound />,
-	component: RootLayout,
+	component: RootComponent,
 })
-
-function RootLayout() {
-	return (
-		<html lang="fr">
-			<head>
-				<HeadContent />
-			</head>
-			<body>
-				<Outlet />
-				<Scripts />
-			</body>
-		</html>
-	)
-}
 
 function RootComponent() {
 	return (

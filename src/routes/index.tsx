@@ -5,6 +5,7 @@ import BottomActionBar from '~/components/bottom-action-bar'
 import CategoryTile from '~/components/category-title'
 import RecentActivities from '~/components/recent-activities'
 import SeeMoreCard from '~/components/see-more-card'
+import { Fixed } from '~/components/sticky'
 import { getChargePageItems } from '~/lib/api/charge'
 
 export const Route = createFileRoute('/')({
@@ -41,14 +42,9 @@ function Homepage() {
 		)
 
 	return (
-		<>
-			<div className="fixed inset-x-0 top-0 z-40 bg-white/90 pt-3 backdrop-blur">
-				<div className="flex h-12 items-center justify-between">
-					<h1 className="flex-1 px-2 text-center text-xl font-semibold tracking-tight">
-						Marketplace
-					</h1>
-				</div>
-			</div>
+		<div>
+			<NavigationHeader />
+
 			<div className="mx-auto w-full max-w-xl space-y-6 p-4 pt-12">
 				{/* Hero / Apple card */}
 				<RecentActivities />
@@ -93,7 +89,7 @@ function Homepage() {
 				ordersHref="/orders"
 				settingsHref="/settings"
 			/>
-		</>
+		</div>
 	)
 }
 
@@ -129,5 +125,17 @@ function ImageCard({
 				style={{ backgroundImage: bg }}
 			/>
 		</div>
+	)
+}
+
+function NavigationHeader() {
+	return (
+		<Fixed position="top">
+			<div className="flex h-12 items-center justify-between">
+				<h1 className="text-heading-large flex-1 px-2 text-center">
+					Marketplace
+				</h1>
+			</div>
+		</Fixed>
 	)
 }
