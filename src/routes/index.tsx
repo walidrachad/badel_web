@@ -1,14 +1,12 @@
-'use client'
-
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 
-import CategoryTile from '~/components/category-title'
 import BottomActionBar from '~/components/bottom-action-bar'
+import CategoryTile from '~/components/category-title'
+import RecentActivities from '~/components/recent-activities'
 import SeeMoreCard from '~/components/see-more-card'
-import { Category, getChargePageItems, GroupItem } from '~/lib/api/charge'
 
-import RecentActivities from '../components/recent-activities'
+import { Category, getChargePageItems, GroupItem } from '~/lib/api/charge'
 
 export const Route = createFileRoute('/')({
 	component: Home,

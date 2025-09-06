@@ -1,4 +1,4 @@
-import { CircleIcon } from 'lucide-react'
+import { CircleIcon, FilterIcon } from 'lucide-react'
 
 import AppBar from '~/components/app-bar'
 
@@ -19,9 +19,7 @@ function Orders() {
 		<div className="w-full pt-13">
 			{/* Header */}
 			<AppBar title="My orders">
-				<CircleIcon>
-					<img src="/icons/filter_icon.svg" alt="Menu" width={16} height={16} />
-				</CircleIcon>
+				<FilterIcon />
 			</AppBar>
 
 			{/* List */}
