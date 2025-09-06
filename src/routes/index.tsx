@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
+import { StarIcon } from 'lucide-react'
 
 import BottomActionBar from '~/components/bottom-action-bar'
 import CategoryTile from '~/components/category-title'
 import RecentActivities from '~/components/recent-activities'
 import SeeMoreCard from '~/components/see-more-card'
 import { Fixed } from '~/components/sticky'
+import { Button } from '~/components/ui/button'
 import { getChargePageItems } from '~/lib/api/charge'
 
 export const Route = createFileRoute('/')({
@@ -42,7 +44,7 @@ function Homepage() {
 		)
 
 	return (
-		<div>
+		<div className="pt-16">
 			<NavigationHeader />
 
 			<div className="mx-auto w-full max-w-xl space-y-6 p-4 pt-12">
