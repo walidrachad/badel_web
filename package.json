@@ -5,10 +5,9 @@
   "type": "module",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky",
     "dev": "vite dev",
-    "build": "vite build",
-    "start": "node .output/server/index.mjs",
+    "build": "vite build && tsc --noEmit",
+    "start": "vite start",
     "lint": "eslint .",
     "prettier": "prettier --write --ignore-unknown .",
     "check-types": "tsc --pretty --noEmit"
@@ -16,7 +15,10 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
     "@tanstack/react-query": "^5.85.6",
+    "@tanstack/react-query-devtools": "^5.87.1",
     "@tanstack/react-router": "^1.131.31",
+    "@tanstack/react-router-devtools": "^1.131.35",
+    "@tanstack/react-router-ssr-query": "^1.131.35",
     "@tanstack/react-start": "^1.131.31",
     "axios": "^1.11.0",
     "class-variance-authority": "^0.7.1",
@@ -42,8 +44,6 @@
     "eslint-config-next": "15.5.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.1.5",
     "postcss": "^8",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
@@ -55,14 +55,5 @@
   "packageManager": "pnpm@10.11.0",
   "engines": {
     "node": ">=22.10.0"
-  },
-  "lint-staged": {
-    "*.{js,ts,jsx,tsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "*.json": [
-      "prettier --write"
-    ]
   }
 }

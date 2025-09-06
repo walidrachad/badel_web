@@ -1,15 +1,23 @@
+import { QueryClient } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import {
-	createRootRoute,
+	createRootRouteWithContext,
 	HeadContent,
 	Outlet,
 	Scripts,
 } from '@tanstack/react-router'
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import * as React from 'react'
 
+import { DefaultCatchBoundary } from '~/components/default-catch-boundary'
+import { NotFound } from '~/components/not-found'
 import { seo } from '~/lib/seo'
 
-import './globals.css'
+import globalCss from './globals.css?url'
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{
+	queryClient: QueryClient
+}>()({
 	head: () => ({
 		meta: [
 			{ charSet: 'utf-8' },
@@ -19,9 +27,40 @@ export const Route = createRootRoute({
 			},
 			...seo({
 				title: 'Bedel Charge',
+				description: '',
 			}),
 		],
+		links: [
+			{ rel: 'stylesheet', href: globalCss },
+			{
+				rel: 'apple-touch-icon',
+				sizes: '180x180',
+				href: '/apple-touch-icon.png',
+			},
+			{
+				rel: 'icon',
+				type: 'image/png',
+				sizes: '32x32',
+				href: '/favicon-32x32.png',
+			},
+			{
+				rel: 'icon',
+				type: 'image/png',
+				sizes: '16x16',
+				href: '/favicon-16x16.png',
+			},
+			{ rel: 'manifest', href: '/site.webmanifest', color: '#fffff' },
+			{ rel: 'icon', href: '/favicon.ico' },
+		],
 	}),
+	errorComponent: (props) => {
+		return (
+			<RootDocument>
+				<DefaultCatchBoundary {...props} />
+			</RootDocument>
+		)
+	},
+	notFoundComponent: () => <NotFound />,
 	component: RootLayout,
 })
 
@@ -33,6 +72,30 @@ function RootLayout() {
 			</head>
 			<body>
 				<Outlet />
+				<Scripts />
+			</body>
+		</html>
+	)
+}
+
+function RootComponent() {
+	return (
+		<RootDocument>
+			<Outlet />
+		</RootDocument>
+	)
+}
+
+function RootDocument({ children }: { children: React.ReactNode }) {
+	return (
+		<html>
+			<head>
+				<HeadContent />
+			</head>
+			<body>
+				{children}
+				<TanStackRouterDevtools position="bottom-right" />
+				<ReactQueryDevtools buttonPosition="bottom-left" />
 				<Scripts />
 			</body>
 		</html>
