@@ -4,8 +4,10 @@ import z from 'zod'
 
 import CategoryTile from '~/components/category-title'
 import AppBar from '~/components/app-bar'
-import { getChargePageItems, type Category } from '~/lib/api/charge'
+
+import { getChargePageItems } from '~/lib/api/charge'
 import { cn } from '~/lib/utils'
+import { CategoryOrGroup } from '~/lib/types'
 
 const chargeSearchSchema = z.object({
 	groupId: z.string().catch(''),
@@ -57,7 +59,8 @@ function Charge() {
 	const qc = useQueryClient()
 	const { groupId } = Route.useSearch()
 
-	const cached = qc.getQueryData<Category[]>(['groupCategories', groupId]) ?? []
+	const cached =
+		qc.getQueryData<CategoryOrGroup[]>(['groupCategories', groupId]) ?? []
 
 	const {
 		data = [],
@@ -72,7 +75,7 @@ function Charge() {
 			const group: any = items.find(
 				(it: any) => it.type === 'group' && it.id === groupId,
 			)
-			return group ? (group.categories as Category[]) : []
+			return group ? (group.categories as CategoryOrGroup[]) : []
 		},
 		initialData: cached,
 		select: (arr) => [...arr].sort(byOrder),
@@ -136,10 +139,7 @@ function Charge() {
 			) : (
 				<div className="space-y-4">
 					{data.map((cat) => {
-						const src =
-							fullUrl(cat.small_image) ??
-							fullUrl(cat.image_path) ??
-							'/images/demo/fallback.png' // safe fallback
+						const src = fullUrl(cat.image_path) ?? '/images/demo/fallback.png'
 						return (
 							<CategoryTile cat={cat}>
 								<ImageCard

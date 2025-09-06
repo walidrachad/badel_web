@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
-import { GiftCard } from '~/types/charge'
+
+import { GiftCard } from '~/lib/types'
 
 type Props = {
 	giftcards: GiftCard[]

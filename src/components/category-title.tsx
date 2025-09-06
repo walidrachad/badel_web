@@ -1,7 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { ReactNode } from 'react'
-import type { Category } from '~/lib/api/charge'
 
 export default function CategoryTile({
 	cat,
@@ -14,7 +13,7 @@ export default function CategoryTile({
 	const queryClient = useQueryClient()
 
 	const go = () => {
-		queryClient.setQueryData<Category>(['category', cat.id], cat)
+		queryClient.setQueryData(['category', cat.id], cat)
 
 		navigate({
 			to: '/charges/$name/$id',

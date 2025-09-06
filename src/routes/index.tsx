@@ -5,19 +5,18 @@ import BottomActionBar from '~/components/bottom-action-bar'
 import CategoryTile from '~/components/category-title'
 import RecentActivities from '~/components/recent-activities'
 import SeeMoreCard from '~/components/see-more-card'
-
-import { Category, getChargePageItems, GroupItem } from '~/lib/api/charge'
+import { getChargePageItems } from '~/lib/api/charge'
 
 export const Route = createFileRoute('/')({
-	component: Home,
+	component: Homepage,
 })
 
-function Home() {
+function Homepage() {
 	const { data, isLoading, isError, refetch } = useQuery({
 		queryKey: ['todos'],
 		queryFn: getChargePageItems,
 	})
-	const todos = (data ?? []) as GroupItem[]
+	const todos = data ?? []
 	const ordered = [...todos].sort(
 		(a, b) => (a.order ?? 9999) - (b.order ?? 9999),
 	)
@@ -54,10 +53,10 @@ function Home() {
 				{/* Hero / Apple card */}
 				<RecentActivities />
 				{ordered.map((item) =>
-					'type' in item && item.type === 'group' ? (
+					item.type === 'group' ? (
 						<Section key={item.id} title={item.name}>
 							<div className="grid grid-cols-2 gap-4">
-								{item.categories.map((cat: Category) => (
+								{item.categories.map((cat) => (
 									<CategoryTile cat={cat} key={cat.id}>
 										<ImageCard
 											key={cat.id}

@@ -3,23 +3,24 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { GlobeIcon } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
+import AppBar from '~/components/app-bar'
 import BottomSheet from '~/components/bottom-sheet'
 import { Select } from '~/components/select'
-import AppBar from '~/components/app-bar'
-import { getChargePageItems, type Category } from '~/lib/api/charge'
+
+import { getChargePageItems } from '~/lib/api/charge'
 import {
 	codeToFlagEmoji,
 	codeToName,
 	uniqueCountriesFromGiftcards,
 } from '~/lib/country'
-import { ChargeItem, GiftCard } from '~/types/charge'
+import { Category, CategoryOrGroup, GiftCard } from '~/lib/types'
 
 import GiftcardGrid from './-gift-card-grid'
 
 const fullUrl = (p?: string | null) =>
 	p ? new URL(p, 'https://staging.bedelportal.com/').toString() : null
 
-function flattenCategories(items: ChargeItem[]): Category[] {
+function flattenCategories(items: CategoryOrGroup[]): Category[] {
 	const out: Category[] = []
 	for (const it of items) {
 		if ('type' in it && it.type === 'group') out.push(...it.categories)
