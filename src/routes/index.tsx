@@ -1,12 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
-import { ArrowLeft } from 'lucide-react'
 
-import BottomActionBar from '~/components/bottom-action-bar'
-import CategoryTile from '~/components/category-title'
+import { BottomNavigation } from '~/components/bottom-navigation'
+import { GiftCardsList } from '~/components/cards-list'
 import { NavigationHeader } from '~/components/navigation-header'
-import RecentActivities from '~/components/recent-activities'
-import SeeMoreCard from '~/components/see-more-card'
+import { RecentActivities } from '~/components/recent-activities'
+
 import { getChargePageItems } from '~/lib/api/charge'
 
 export const Route = createFileRoute('/')({
@@ -18,116 +17,39 @@ function Homepage() {
 		queryKey: ['todos'],
 		queryFn: getChargePageItems,
 	})
-	const todos = data ?? []
-	const ordered = [...todos].sort(
-		(a, b) => (a.order ?? 9999) - (b.order ?? 9999),
-	)
 
-	if (isLoading)
-		return (
-			<div className="mx-auto flex w-full max-w-xl items-center justify-center py-20">
-				<div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600" />
-			</div>
-		)
-	if (isError)
-		return (
-			<div className="p-6">
-				<p className="text-red-600">Failed to load.</p>
-				<button
-					onClick={() => refetch()}
-					className="mt-2 rounded border px-3 py-1"
-				>
-					Retry
-				</button>
-			</div>
-		)
+	if (isLoading) return <Loading />
+
+	if (isError) return <Error refetch={refetch} />
 
 	return (
-		<div className="grid">
+		<div className="grid pb-20">
 			<NavigationHeader title="Marketplace" />
-
-			{/* Recent activities */}
 			<RecentActivities />
-
-			<div className="mx-auto w-full max-w-xl space-y-6 p-4 pt-12">
-				{/* Hero / Apple card */}
-				{ordered.map((item) =>
-					item.type === 'group' ? (
-						<Section key={item.id} title={item.name}>
-							<div className="grid grid-cols-2 gap-4">
-								{item.categories.map((cat) => (
-									<CategoryTile cat={cat} key={cat.id}>
-										<ImageCard
-											key={cat.id}
-											bg={`url('https://staging.bedelportal.com/${
-												cat.image_path
-											}')`}
-											title=""
-										/>
-									</CategoryTile>
-								))}
-								<SeeMoreCard groupId={item.name} categories={item.categories} />
-							</div>
-						</Section>
-					) : (
-						<CategoryTile cat={item} key={item.id}>
-							<div
-								className="rounded-2xl border bg-[length:100%_100%] p-4 sm:p-6"
-								style={{
-									backgroundImage: `url('https://staging.bedelportal.com/${
-										item.image_path
-									}')`,
-								}}
-							>
-								<div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl p-5 sm:p-7">
-									<div className="absolute inset-0 flex items-center justify-center"></div>
-								</div>
-							</div>
-						</CategoryTile>
-					),
-				)}
-			</div>
-
-			<BottomActionBar
-				homeHref="/"
-				ordersHref="/orders"
-				settingsHref="/settings"
-			/>
+			<GiftCardsList data={data} />
+			<BottomNavigation />
 		</div>
 	)
 }
 
-/* ---------- small design-only atoms ---------- */
-
-function Section({
-	title,
-	children,
-}: {
-	title: string
-	children: React.ReactNode
-}) {
+function Loading() {
 	return (
-		<section className="space-y-3">
-			<h2 className="text-lg font-semibold">{title}</h2>
-			{children}
-		</section>
+		<div className="mx-auto flex w-full max-w-xl items-center justify-center py-20">
+			<div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600" />
+		</div>
 	)
 }
 
-function ImageCard({
-	bg,
-}: {
-	title: string
-	flag?: string
-	badge?: string
-	bg: string
-}) {
+function Error({ refetch }: { refetch: () => void }) {
 	return (
-		<div className="bg-muted/10 overflow-hidden rounded-2xl border shadow-sm">
-			<div
-				className="aspect-[16/10] w-full bg-cover bg-center"
-				style={{ backgroundImage: bg }}
-			/>
+		<div className="p-6">
+			<p className="text-red-600">Failed to load.</p>
+			<button
+				onClick={() => refetch()}
+				className="mt-2 rounded border px-3 py-1"
+			>
+				Retry
+			</button>
 		</div>
 	)
 }

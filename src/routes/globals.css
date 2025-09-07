@@ -1,7 +1,7 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
 
 @plugin "tailwindcss-animate";
-@import 'tw-animate-css';
 
 :root {
 	--base-black: #000;
@@ -86,7 +86,7 @@
 	--color-emphasis: var(--gray-11);
 	--color-inverted: var(--gray-12);
 	--color-overlay: var(--base-black) / 60;
-	--color-accent: var(--accent-11);
+	--color-accent: var(--accent-10);
 	--color-accent-muted: var(--accent-3);
 	--color-success: var(--green-10);
 	--color-success-muted: var(--green-3);
