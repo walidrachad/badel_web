@@ -1,59 +1,53 @@
-type Activity = {
-	id: string
-	name: string
-	icon: string // image URL
-}
-
-const activities: Activity[] = [
-	{
-		id: '1',
-		name: 'Apple Charge',
-		icon: '/images/demo/apple.png', // your apple logo path
-	},
-	{
-		id: '2',
-		name: 'Netflix Subscription',
-		icon: '/images/demo/netflix.png', // your netflix logo path
-	},
-	{
-		id: '2',
-		name: 'Netflix Subscription',
-		icon: '/images/demo/netflix.png', // your netflix logo path
-	},
-]
+// TODO - translate content
 
 export default function RecentActivities() {
 	return (
-		<section className="mt-6 space-y-3">
-			<h2 className="text-base font-semibold">Recent activities</h2>
+		<section className="container space-y-3 py-4">
+			<h2 className="text-paragraph-small">Recent activities</h2>
 
-			<div className="flex items-start gap-6 overflow-x-auto pb-2">
-				{activities.map((a) => (
-					<div key={a.id} className="flex w-16 flex-col items-center gap-2">
-						<div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-50 shadow-sm">
-							<img
-								src={a.icon}
-								alt={a.name}
-								className="h-8 w-8 object-contain"
-							/>
-						</div>
-						<p className="w-full truncate text-center text-xs leading-tight font-medium text-black">
-							{a.name}
+			<div className="grid grid-cols-5 gap-4">
+				{activities.map((activity) => (
+					<div key={activity.id} className="space-y-3">
+						<img
+							src={activity.src}
+							alt={activity.name}
+							className="aspect-square w-full rounded-full object-contain"
+						/>
+
+						<p className="text-label-small line-clamp-2 text-center">
+							{activity.name}
 						</p>
 					</div>
 				))}
 
-				{/* placeholders */}
-				{[...Array(2)].map((_, i) => (
-					<div
-						key={`placeholder-${i}`}
-						className="flex w-16 flex-col items-center gap-2"
-					>
-						<div className="h-16 w-16 rounded-full bg-gray-50" />
-						<div className="h-2 w-12 rounded-full bg-gray-100" />
-					</div>
-				))}
+				{[...Array(activities.length < 5 ? 5 - activities.length : 0)].map(
+					(_, i) => (
+						<div key={i} className="space-y-2">
+							<div className="bg-muted aspect-square w-full rounded-full" />
+							<div className="bg-muted h-4 w-11/12 rounded-full" />
+						</div>
+					),
+				)}
 			</div>
 		</section>
 	)
 }
+
+type Activity = {
+	id: number
+	name: string
+	src: string
+}
+
+const activities: Activity[] = [
+	{
+		id: 1,
+		name: 'Apple Charge',
+		src: '/gift-cards-images/apple/apple_thumbnail_square.jpg',
+	},
+	{
+		id: 2,
+		name: 'Netflix Subscription',
+		src: '/gift-cards-images/netflix/netflix_thumbnail_square.jpg',
+	},
+]

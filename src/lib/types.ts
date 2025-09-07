@@ -47,3 +47,9 @@ export type GiftCard = {
 export type CategoryOrGroup =
 	| (Category & { type: 'country' | 'none' })
 	| (CategoriesGroup & { type: 'group' })
+
+export type Activity = {
+	id: number
+	name: string
+	icon: string
+}

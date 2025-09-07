@@ -1,13 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
-import { StarIcon } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 
 import BottomActionBar from '~/components/bottom-action-bar'
 import CategoryTile from '~/components/category-title'
+import { NavigationHeader } from '~/components/navigation-header'
 import RecentActivities from '~/components/recent-activities'
 import SeeMoreCard from '~/components/see-more-card'
-import { Fixed } from '~/components/sticky'
-import { Button } from '~/components/ui/button'
 import { getChargePageItems } from '~/lib/api/charge'
 
 export const Route = createFileRoute('/')({
@@ -44,12 +43,14 @@ function Homepage() {
 		)
 
 	return (
-		<div className="pt-16">
-			<NavigationHeader />
+		<div className="grid">
+			<NavigationHeader title="Marketplace" />
+
+			{/* Recent activities */}
+			<RecentActivities />
 
 			<div className="mx-auto w-full max-w-xl space-y-6 p-4 pt-12">
 				{/* Hero / Apple card */}
-				<RecentActivities />
 				{ordered.map((item) =>
 					item.type === 'group' ? (
 						<Section key={item.id} title={item.name}>
@@ -86,6 +87,7 @@ function Homepage() {
 					),
 				)}
 			</div>
+
 			<BottomActionBar
 				homeHref="/"
 				ordersHref="/orders"
@@ -127,17 +129,5 @@ function ImageCard({
 				style={{ backgroundImage: bg }}
 			/>
 		</div>
-	)
-}
-
-function NavigationHeader() {
-	return (
-		<Fixed position="top">
-			<div className="flex h-12 items-center justify-between">
-				<h1 className="text-heading-large flex-1 px-2 text-center">
-					Marketplace
-				</h1>
-			</div>
-		</Fixed>
 	)
 }

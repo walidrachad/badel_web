@@ -1,10 +1,9 @@
-import { http } from '../http'
 import { seeds } from '../seed'
 import { CategoryOrGroup } from '../types'
 import { sleep } from '../utils'
 
 export async function getChargePageItems(): Promise<CategoryOrGroup[]> {
-	await sleep(2000)
+	await sleep(500)
 	// const res = await http.get<{
 	// 	status: boolean
 	// 	data: CategoryOrGroup[]
