@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import type { PhoneItem } from '~/lib/phone-storage'
 import {
 	getSavedPhones,
 	setSavedPhones,
 	setSelectedPhoneId,
-	type PhoneItem,
 } from '~/lib/phone-storage'
 
 type Item = { id: string; label: string }
@@ -11,7 +11,7 @@ type Item = { id: string; label: string }
 function labelToId(label: string) {
 	return label.replace(/\s+/g, '')
 }
-function uniqById(arr: Item[]) {
+function uniqById(arr: Array<Item>) {
 	const map = new Map<string, Item>()
 	for (const it of arr) map.set(it.id, it)
 	return Array.from(map.values())
@@ -27,7 +27,7 @@ export default function PhoneNumberSelect({
 	persistSelection = true, // NEW: save selected id automatically
 }: {
 	label?: string
-	items: Item[]
+	items: Array<Item>
 	value?: string | null // selected id (controlled allowed)
 	onChange?: (id: string) => void
 	onAddNew?: () => void
@@ -39,7 +39,7 @@ export default function PhoneNumberSelect({
 	const popRef = useRef<HTMLDivElement | null>(null)
 
 	// load phones (merge props + localStorage)
-	const [localItems, setLocalItems] = useState<Item[]>([])
+	const [localItems, setLocalItems] = useState<Array<Item>>([])
 	useEffect(() => {
 		const ls = getSavedPhones()
 		setLocalItems(uniqById([...ls, ...items]))
@@ -47,7 +47,7 @@ export default function PhoneNumberSelect({
 
 	// save to localStorage when list changes
 	useEffect(() => {
-		if (localItems.length) setSavedPhones(localItems as PhoneItem[])
+		if (localItems.length) setSavedPhones(localItems as Array<PhoneItem>)
 	}, [localItems])
 
 	// selected item
@@ -88,19 +88,20 @@ export default function PhoneNumberSelect({
 			setOpen(false)
 			return
 		}
-		const label = raw.trim()
-		if (!label) {
+		const trimmedLabel = raw.trim()
+
+		if (!trimmedLabel) {
 			setOpen(false)
 			return
 		}
-		const id = labelToId(label)
+		const id = labelToId(trimmedLabel)
 		const exists = localItems.find((i) => i.id === id)
 		if (exists) {
 			selectAndPersist(exists.id)
 			onAddNew?.()
 			return
 		}
-		const next = uniqById([...localItems, { id, label }])
+		const next = uniqById([...localItems, { id, label: trimmedLabel }])
 		setLocalItems(next)
 		selectAndPersist(id)
 		onAddNew?.()

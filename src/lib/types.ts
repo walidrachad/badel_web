@@ -14,7 +14,7 @@ export type Category = {
 	in_stock: 0 | 1
 	type: 'country' | 'none'
 	order: number
-	giftcards: GiftCard[]
+	giftcards: Array<GiftCard>
 }
 
 export type CategoriesGroup = {
@@ -25,7 +25,7 @@ export type CategoriesGroup = {
 	name_fr: string | null
 	name_ar: string | null
 	image_path: string | null
-	categories: Category[]
+	categories: Array<Category>
 }
 
 export type GiftCard = {
@@ -34,8 +34,8 @@ export type GiftCard = {
 	output: string | null
 	output_fr: string | null
 	output_ar: string | null
-	amount: string
-	amount_after_fee: string
+	amount?: string
+	amount_after_fee?: string
 	in_stock: 0 | 1
 	country: string | null
 	category_id: number

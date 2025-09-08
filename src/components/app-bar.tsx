@@ -1,5 +1,5 @@
-import { useNavigate, useRouter } from '@tanstack/react-router'
-import { ReactNode } from 'react'
+import { useRouter } from '@tanstack/react-router'
+import type { ReactNode } from 'react'
 
 export default function AppBar({
 	title,

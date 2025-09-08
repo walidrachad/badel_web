@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
-import { CategoryOrGroup } from '~/lib/types'
+import type { CategoryOrGroup } from '~/lib/types'
 
 export default function SeeMoreCard({
 	to = '/charges/gaming',
@@ -9,7 +9,7 @@ export default function SeeMoreCard({
 }: {
 	to?: string
 	groupId: string
-	categories: CategoryOrGroup[]
+	categories: Array<CategoryOrGroup>
 }) {
 	const qc = useQueryClient()
 	const navigate = useNavigate()

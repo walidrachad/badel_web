@@ -1,4 +1,4 @@
-import { LucideIcon } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 
 import { Button } from './ui/button'
 
@@ -39,7 +39,7 @@ export function NavigationHeader({
 					size="icon"
 					variant="secondary"
 					className="size-10"
-					onClick={trailingAction?.onClick}
+					onClick={trailingAction.onClick}
 				>
 					<trailingAction.icon className="size-5" />
 				</Button>

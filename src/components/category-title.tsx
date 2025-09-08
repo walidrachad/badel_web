@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 export default function CategoryTile({
 	cat,

@@ -1,6 +1,6 @@
-import { CategoryOrGroup } from './types'
+import type { CategoryOrGroup } from './types'
 
-export const seeds: CategoryOrGroup[] = [
+export const seeds: Array<CategoryOrGroup> = [
 	{
 		id: 1,
 		type: 'country',

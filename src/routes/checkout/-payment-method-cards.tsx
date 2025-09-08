@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React from 'react'
 
 type Bank = {
 	id: number
@@ -11,7 +11,7 @@ type Bank = {
 type ApiResp = {
 	status: boolean
 	message?: string
-	data: Bank[]
+	data: Array<Bank>
 }
 
 const BASE_URL = 'https://staging.bedelportal.com' // ⬅️ adjust if needed
@@ -25,13 +25,13 @@ export default function PaymentMethodCards({
 	onChange?: (bank: Bank | null) => void
 	className?: string
 }) {
-	const [banks, setBanks] = useState<Bank[]>([])
-	const [loading, setLoading] = useState<boolean>(true)
-	const [error, setError] = useState<string | null>(null)
-	const [selectedId, setSelectedId] = useState<number | null>(null)
+	const [banks, setBanks] = React.useState<Array<Bank>>([])
+	const [loading, setLoading] = React.useState<boolean>(true)
+	const [error, setError] = React.useState<string | null>(null)
+	const [selectedId, setSelectedId] = React.useState<number | null>(null)
 
 	// fetch banks
-	useEffect(() => {
+	React.useEffect(() => {
 		let alive = true
 		async function run() {
 			setLoading(true)

@@ -4,7 +4,7 @@ import { cn } from '~/lib/utils'
 
 type PropsType = {
 	label: string
-	items: { value: string; label: string }[]
+	items: Array<{ value: string; label: string }>
 	prefixIcon?: React.ReactNode
 	className?: string
 

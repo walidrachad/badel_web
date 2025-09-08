@@ -1,9 +1,8 @@
+import type { CategoryOrGroup } from '~/lib/types'
 import CategoryTile from '~/components/category-title'
 import SeeMoreCard from '~/components/see-more-card'
 
-import { CategoryOrGroup } from '~/lib/types'
-
-export function GiftCardsList({ data }: { data?: CategoryOrGroup[] }) {
+export function GiftCardsList({ data }: { data?: Array<CategoryOrGroup> }) {
 	if (!data) return null
 
 	return (

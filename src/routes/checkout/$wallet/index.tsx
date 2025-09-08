@@ -1,18 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
+import z from 'zod'
 
 import AppBar from '~/components/app-bar'
 import { useSavedPhone } from '~/hooks/use-saved-phone'
 
 import OtpInput from './-components/otp-input'
 import PaymentFlowRow from './-components/payment-flow-row'
-import z from 'zod'
 
 const walletSearchSchema = z.object({
 	profile_picture: z.number().catch(1),
-	price: z.string().catch(''),
-	name: z.string().catch(''),
-	send_account: z.string().catch(''),
+	price: z.string().catch('').optional(),
+	name: z.string().catch('').optional(),
+	send_account: z.string().catch('').optional(),
 })
 
 export const Route = createFileRoute('/checkout/$wallet/')({

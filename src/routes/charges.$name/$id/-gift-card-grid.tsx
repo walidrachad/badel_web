@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react'
 
-import { GiftCard } from '~/lib/types'
+import type { GiftCard } from '~/lib/types'
 
 type Props = {
-	giftcards: GiftCard[]
+	giftcards: Array<GiftCard>
 	onChange?: (gc: GiftCard | null) => void
 	/** If true, sorts by numeric value extracted from `output` (default true) */
 	sortByOutputValue?: boolean
@@ -17,7 +17,7 @@ export default function GiftcardGrid({
 	const [selectedId, setSelectedId] = useState<number | null>(null)
 
 	const items = useMemo(() => {
-		const arr = [...(giftcards ?? [])]
+		const arr = [...giftcards]
 		if (!sortByOutputValue) return arr
 		const num = (s?: string | null) =>
 			Number(String(s ?? '').replace(/[^\d.]/g, '')) || 0

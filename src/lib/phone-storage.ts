@@ -21,17 +21,17 @@ export function lsSet(key: string, value: string) {
 
 export type PhoneItem = { id: string; label: string }
 
-export function getSavedPhones(): PhoneItem[] {
+export function getSavedPhones(): Array<PhoneItem> {
 	const raw = lsGet(PHONES_KEY)
 	if (!raw) return []
 	try {
-		return JSON.parse(raw) as PhoneItem[]
+		return JSON.parse(raw) as Array<PhoneItem>
 	} catch {
 		return []
 	}
 }
 
-export function setSavedPhones(items: PhoneItem[]) {
+export function setSavedPhones(items: Array<PhoneItem>) {
 	lsSet(PHONES_KEY, JSON.stringify(items))
 }
 

@@ -1,13 +1,13 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import z from 'zod'
 
+import type { CategoryOrGroup } from '~/lib/types'
 import CategoryTile from '~/components/category-title'
 import AppBar from '~/components/app-bar'
 
 import { getChargePageItems } from '~/lib/api/charge'
 import { cn } from '~/lib/utils'
-import { CategoryOrGroup } from '~/lib/types'
 
 const chargeSearchSchema = z.object({
 	groupId: z.string().catch(''),
@@ -60,7 +60,7 @@ function Charge() {
 	const { groupId } = Route.useSearch()
 
 	const cached =
-		qc.getQueryData<CategoryOrGroup[]>(['groupCategories', groupId]) ?? []
+		qc.getQueryData<Array<CategoryOrGroup>>(['groupCategories', groupId]) ?? []
 
 	const {
 		data = [],
@@ -75,13 +75,14 @@ function Charge() {
 			const group: any = items.find(
 				(it: any) => it.type === 'group' && it.id === groupId,
 			)
-			return group ? (group.categories as CategoryOrGroup[]) : []
+			return group ? (group.categories as Array<CategoryOrGroup>) : []
 		},
 		initialData: cached,
 		select: (arr) => [...arr].sort(byOrder),
 		staleTime: 60_000,
 	})
 
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (isLoading)
 		return (
 			<div className="mx-auto flex w-full max-w-xl items-center justify-center py-20">

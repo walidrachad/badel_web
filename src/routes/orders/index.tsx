@@ -1,9 +1,11 @@
-import { CircleIcon, FilterIcon } from 'lucide-react'
+import React from 'react'
+import { FilterIcon } from 'lucide-react'
+import { Link, createFileRoute } from '@tanstack/react-router'
 
 import AppBar from '~/components/app-bar'
 
-import { ORDERS, Order, OrderStatus } from './-mock'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { ORDERS, OrderStatus } from './-mock'
+import type { Order } from './-mock'
 
 export const Route = createFileRoute('/orders/')({
 	component: Orders,

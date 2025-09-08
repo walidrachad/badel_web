@@ -13,15 +13,15 @@ import {
 	codeToName,
 	uniqueCountriesFromGiftcards,
 } from '~/lib/country'
-import { Category, CategoryOrGroup, GiftCard } from '~/lib/types'
+import type { Category, CategoryOrGroup, GiftCard } from '~/lib/types'
 
 import GiftcardGrid from './-gift-card-grid'
 
 const fullUrl = (p?: string | null) =>
 	p ? new URL(p, 'https://staging.bedelportal.com/').toString() : null
 
-function flattenCategories(items: CategoryOrGroup[]): Category[] {
-	const out: Category[] = []
+function flattenCategories(items: Array<CategoryOrGroup>): Array<Category> {
+	const out: Array<Category> = []
 	for (const it of items) {
 		if ('type' in it && it.type === 'group') out.push(...it.categories)
 		else out.push(it as unknown as Category)
@@ -44,28 +44,31 @@ function CategoryPage() {
 
 	const cached = qc.getQueryData<Category>(['category', id])
 
-	const { data, isLoading, isError, refetch } = useQuery({
+	const {
+		data: cat,
+		isLoading,
+		isError,
+		refetch,
+	} = useQuery({
 		queryKey: ['category', id],
 		queryFn: async () => {
 			if (cached) return cached
 			const items = await getChargePageItems()
-			const cat = flattenCategories(items).find((c) => c.id === Number(id))
-			return cat ?? null
+			return flattenCategories(items).find((c) => c.id === Number(id))
 		},
 		initialData: cached ?? null,
 		staleTime: 60_000,
 	})
 
-	const cat = data as Category
-
 	const filteredGiftcards = useMemo(() => {
-		if (!selectedCountry) return cat.giftcards ?? []
-		return (cat.giftcards ?? []).filter(
+		if (!selectedCountry) return cat?.giftcards ?? []
+		return (cat?.giftcards ?? []).filter(
 			(gc) => gc.country?.toUpperCase() === selectedCountry.toUpperCase(),
 		)
-	}, [cat.giftcards, selectedCountry])
+	}, [cat?.giftcards, selectedCountry])
 
 	// UI guards
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (isLoading)
 		return (
 			<div className="mx-auto flex w-full max-w-xl items-center justify-center py-20">
@@ -73,7 +76,7 @@ function CategoryPage() {
 			</div>
 		)
 
-	if (isError || !data)
+	if (isError || !cat)
 		return (
 			<div className="p-6">
 				<p className="text-red-600">Category not found.</p>
@@ -91,7 +94,7 @@ function CategoryPage() {
 		fullUrl(cat.image_path) ??
 		'/images/demo/fallback.png'
 	// const giftcards = cat.giftcards ?? [];
-	const countryCodes = uniqueCountriesFromGiftcards(cat.giftcards ?? [])
+	const countryCodes = uniqueCountriesFromGiftcards(cat.giftcards)
 	const selectItems = countryCodes.map((code) => ({
 		label: `${codeToFlagEmoji(code)} ${codeToName(code)}`, // e.g. "🇺🇸 United States"
 		value: code, // "US"
@@ -153,11 +156,7 @@ function CategoryPage() {
 				{cat.type !== 'none' ? (
 					<div className="relative">
 						<Select
-							label={
-								cat.type === 'country'
-									? 'Your account region'
-									: 'Your account type'
-							}
+							label="Your account region"
 							items={selectItems}
 							defaultValue={selectItems[0]?.value}
 							prefixIcon={<GlobeIcon />}
@@ -211,7 +210,7 @@ function CategoryPage() {
 								search: {
 									gcId: selectedGC.id,
 									catId: cat.id,
-									price: price,
+									price: price ?? '0',
 									name: cat.name,
 									output: selectedGC.output,
 									image: cat.image_path,

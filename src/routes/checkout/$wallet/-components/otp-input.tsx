@@ -13,8 +13,8 @@ export default function OtpInput({
 	onChange?: (code: string) => void // fires on any change
 	autoFocus?: boolean
 }) {
-	const [values, setValues] = useState<string[]>(Array(length).fill(''))
-	const refs = useRef<(HTMLInputElement | null)[]>([])
+	const [values, setValues] = useState<Array<string>>(Array(length).fill(''))
+	const refs = useRef<Array<HTMLInputElement | null>>([])
 
 	// focus first on mount
 	useEffect(() => {

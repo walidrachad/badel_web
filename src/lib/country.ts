@@ -24,7 +24,7 @@ const regionNames =
 		: null
 
 export function codeToName(code: string) {
-	return regionNames?.of?.(code.toUpperCase()) ?? code.toUpperCase()
+	return regionNames?.of(code.toUpperCase()) ?? code.toUpperCase()
 }
 
 // build unique, sorted list from giftcards
@@ -32,7 +32,7 @@ export function uniqueCountriesFromGiftcards(
 	giftcards: Array<{ country?: string | null; display_value?: string | null }>,
 ) {
 	const set = new Set<string>()
-	for (const gc of giftcards ?? []) {
+	for (const gc of giftcards) {
 		const code = pickCountryCode(gc)
 		if (code) set.add(code)
 	}

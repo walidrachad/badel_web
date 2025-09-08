@@ -29,7 +29,7 @@
 		"**/*.ts",
 		"**/*.tsx",
 		"eslint.config.mjs",
-		"prettier.config.js",
+		"prettier.config.mjs",
 		"vite.config.ts"
 	]
 }

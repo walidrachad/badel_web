@@ -54,7 +54,7 @@ type Activity = {
 	src: string
 }
 
-const activities: Activity[] = [
+const activities: Array<Activity> = [
 	{
 		id: 1,
 		name: 'Apple Charge',

@@ -1,13 +1,11 @@
-import { QueryClient } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import {
-	createRootRouteWithContext,
 	HeadContent,
 	Outlet,
 	Scripts,
+	createRootRouteWithContext,
 } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import * as React from 'react'
+import type { QueryClient } from '@tanstack/react-query'
 
 import { DefaultCatchBoundary } from '~/components/default-catch-boundary'
 import { NotFound } from '~/components/not-found'

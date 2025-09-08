@@ -19,7 +19,7 @@ export type Order = {
 const iso = (y: number, m: number, d: number, hh = 20, mm = 12) =>
 	new Date(Date.UTC(y, m - 1, d, hh, mm)).toISOString()
 
-export const ORDERS: Order[] = [
+export const ORDERS: Array<Order> = [
 	{
 		id: 'ord_1001',
 		title: '$100 Apple iTunes Gift Card • USA',
