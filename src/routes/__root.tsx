@@ -1,3 +1,4 @@
+import type { QueryClient } from '@tanstack/react-query'
 import {
 	HeadContent,
 	Outlet,
@@ -5,11 +6,13 @@ import {
 	createRootRouteWithContext,
 } from '@tanstack/react-router'
 import * as React from 'react'
-import type { QueryClient } from '@tanstack/react-query'
+import { TanStackDevtools } from '@tanstack/react-devtools'
+import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 
 import { DefaultCatchBoundary } from '~/components/default-catch-boundary'
 import { NotFound } from '~/components/not-found'
 import { seo } from '~/lib/seo'
+import TanStackQueryDevtools from '~/integrations/devtools'
 
 import globalCss from './globals.css?url'
 
@@ -78,8 +81,18 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			</head>
 			<body>
 				{children}
-				{/* <TanStackRouterDevtools position="bottom-right" />
-				<ReactQueryDevtools buttonPosition="bottom-left" /> */}
+				<TanStackDevtools
+					config={{
+						position: 'bottom-left',
+					}}
+					plugins={[
+						{
+							name: 'Tanstack Router',
+							render: <TanStackRouterDevtoolsPanel />,
+						},
+						TanStackQueryDevtools,
+					]}
+				/>
 				<Scripts />
 			</body>
 		</html>
