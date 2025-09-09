@@ -15,6 +15,7 @@ import { Route as CheckoutIndexRouteImport } from './routes/checkout/index'
 import { Route as OrdersIdRouteImport } from './routes/orders/$id'
 import { Route as CheckoutWalletIndexRouteImport } from './routes/checkout/$wallet/index'
 import { Route as ChargesNameIndexRouteImport } from './routes/charges.$name/index'
+import { Route as ChargeIdIndexRouteImport } from './routes/charge.$id/index'
 import { Route as ChargesNameIdIndexRouteImport } from './routes/charges.$name/$id/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -47,6 +48,11 @@ const ChargesNameIndexRoute = ChargesNameIndexRouteImport.update({
   path: '/charges/$name/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChargeIdIndexRoute = ChargeIdIndexRouteImport.update({
+  id: '/charge/$id/',
+  path: '/charge/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChargesNameIdIndexRoute = ChargesNameIdIndexRouteImport.update({
   id: '/charges/$name/$id/',
   path: '/charges/$name/$id/',
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/orders/$id': typeof OrdersIdRoute
   '/checkout': typeof CheckoutIndexRoute
   '/orders': typeof OrdersIndexRoute
+  '/charge/$id': typeof ChargeIdIndexRoute
   '/charges/$name': typeof ChargesNameIndexRoute
   '/checkout/$wallet': typeof CheckoutWalletIndexRoute
   '/charges/$name/$id': typeof ChargesNameIdIndexRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/orders/$id': typeof OrdersIdRoute
   '/checkout': typeof CheckoutIndexRoute
   '/orders': typeof OrdersIndexRoute
+  '/charge/$id': typeof ChargeIdIndexRoute
   '/charges/$name': typeof ChargesNameIndexRoute
   '/checkout/$wallet': typeof CheckoutWalletIndexRoute
   '/charges/$name/$id': typeof ChargesNameIdIndexRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/orders/$id': typeof OrdersIdRoute
   '/checkout/': typeof CheckoutIndexRoute
   '/orders/': typeof OrdersIndexRoute
+  '/charge/$id/': typeof ChargeIdIndexRoute
   '/charges/$name/': typeof ChargesNameIndexRoute
   '/checkout/$wallet/': typeof CheckoutWalletIndexRoute
   '/charges/$name/$id/': typeof ChargesNameIdIndexRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/orders/$id'
     | '/checkout'
     | '/orders'
+    | '/charge/$id'
     | '/charges/$name'
     | '/checkout/$wallet'
     | '/charges/$name/$id'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/orders/$id'
     | '/checkout'
     | '/orders'
+    | '/charge/$id'
     | '/charges/$name'
     | '/checkout/$wallet'
     | '/charges/$name/$id'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/orders/$id'
     | '/checkout/'
     | '/orders/'
+    | '/charge/$id/'
     | '/charges/$name/'
     | '/checkout/$wallet/'
     | '/charges/$name/$id/'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   OrdersIdRoute: typeof OrdersIdRoute
   CheckoutIndexRoute: typeof CheckoutIndexRoute
   OrdersIndexRoute: typeof OrdersIndexRoute
+  ChargeIdIndexRoute: typeof ChargeIdIndexRoute
   ChargesNameIndexRoute: typeof ChargesNameIndexRoute
   CheckoutWalletIndexRoute: typeof CheckoutWalletIndexRoute
   ChargesNameIdIndexRoute: typeof ChargesNameIdIndexRoute
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChargesNameIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/charge/$id/': {
+      id: '/charge/$id/'
+      path: '/charge/$id'
+      fullPath: '/charge/$id'
+      preLoaderRoute: typeof ChargeIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/charges/$name/$id/': {
       id: '/charges/$name/$id/'
       path: '/charges/$name/$id'
@@ -180,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrdersIdRoute: OrdersIdRoute,
   CheckoutIndexRoute: CheckoutIndexRoute,
   OrdersIndexRoute: OrdersIndexRoute,
+  ChargeIdIndexRoute: ChargeIdIndexRoute,
   ChargesNameIndexRoute: ChargesNameIndexRoute,
   CheckoutWalletIndexRoute: CheckoutWalletIndexRoute,
   ChargesNameIdIndexRoute: ChargesNameIdIndexRoute,

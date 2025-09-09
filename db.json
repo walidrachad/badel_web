@@ -1,0 +1,94 @@
+{
+	"featuredProducts": [
+		{
+			"id": "apple_charge",
+			"name": "Apple Charge",
+			"imageUrl": "/cards/apple/apple.jpg",
+			"categoryId": null,
+			"startingFrom": {
+				"amount": 25,
+				"currency": "USD"
+			}
+		}
+	],
+	"categories": [
+		{
+			"id": "cat_streaming",
+			"name": "Streaming",
+			"icon": "play-circle"
+		},
+		{
+			"id": "cat_shopping",
+			"name": "Shopping",
+			"icon": "shopping-bag"
+		}
+	],
+	"products": [
+		{
+			"id": "apple_charge",
+			"name": "Apple Charge",
+			"imageUrl": "/images/netflix.png",
+			"categoryId": "cat_streaming",
+			"countries": ["us"]
+		},
+		{
+			"id": "prod_hbo",
+			"name": "HBO Max Gift Card",
+			"imageUrl": "/images/hbo.png",
+			"categoryId": "cat_streaming",
+			"countries": ["us"]
+		},
+		{
+			"id": "prod_amazon",
+			"name": "Amazon Gift Card",
+			"imageUrl": "/images/amazon.png",
+			"categoryId": "cat_shopping",
+			"countries": ["us"]
+		}
+	],
+	"countries": [{ "id": "us", "name": "United States", "currency": "USD" }],
+	"denominations": [
+		{
+			"id": "netflix_us_25",
+			"productId": "apple_charge",
+			"countryId": "us",
+			"amount": 25,
+			"currency": "USD"
+		},
+		{
+			"id": "netflix_us_50",
+			"productId": "apple_charge",
+			"countryId": "us",
+			"amount": 50,
+			"currency": "USD"
+		},
+		{
+			"id": "hbo_us_30",
+			"productId": "prod_hbo",
+			"countryId": "us",
+			"amount": 30,
+			"currency": "USD"
+		},
+		{
+			"id": "amazon_us_10",
+			"productId": "prod_amazon",
+			"countryId": "us",
+			"amount": 10,
+			"currency": "USD"
+		},
+		{
+			"id": "amazon_us_50",
+			"productId": "prod_amazon",
+			"countryId": "us",
+			"amount": 50,
+			"currency": "USD"
+		}
+	],
+	"items": [
+		{ "id": "item_netflix_us_25", "denominationId": "netflix_us_25" },
+		{ "id": "item_netflix_us_50", "denominationId": "netflix_us_50" },
+		{ "id": "item_hbo_us_30", "denominationId": "hbo_us_30" },
+		{ "id": "item_amazon_us_10", "denominationId": "amazon_us_10" },
+		{ "id": "item_amazon_us_50", "denominationId": "amazon_us_50" }
+	]
+}

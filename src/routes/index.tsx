@@ -2,13 +2,20 @@ import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 
 import { BottomNavigation } from '~/components/bottom-navigation'
-import { GiftCardsList } from '~/components/cards-list'
+import { GiftCardsList } from '~/components/gift-cards-list'
 import { NavigationHeader } from '~/components/navigation-header'
 import { RecentActivities } from '~/components/recent-activities'
+
+import { api } from '~/lib/api'
 
 import { getChargePageItems } from '~/lib/api/charge'
 
 export const Route = createFileRoute('/')({
+	loader: async () => {
+		const featured = await api.get('/featuredProducts')
+
+		console.log(featured)
+	},
 	component: Homepage,
 })
 

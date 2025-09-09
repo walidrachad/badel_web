@@ -1,8 +1,8 @@
-import { seeds } from '../seed'
-import { sleep } from '../utils'
-import type { CategoryOrGroup } from '../types'
+import { categoriesList } from '~/data/categories'
 
-export async function getChargePageItems(): Promise<Array<CategoryOrGroup>> {
+import { sleep } from '../utils'
+
+export async function getChargePageItems() {
 	await sleep(500)
 	// const res = await http.get<{
 	// 	status: boolean
@@ -11,5 +11,5 @@ export async function getChargePageItems(): Promise<Array<CategoryOrGroup>> {
 	// 	message?: string
 	// }>('/api/v3/charge-page-items')
 
-	return seeds
+	return categoriesList
 }
