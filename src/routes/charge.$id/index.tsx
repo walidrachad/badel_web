@@ -3,8 +3,8 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 
 import AppBar from '~/components/app-bar'
 import CategoryTile from '~/components/category-title'
-import type { CategoryOrGroup } from '~/lib/types'
 import { getChargePageItems } from '~/lib/api/charge'
+import type { CategoryOrGroup } from '~/lib/types'
 import { cn } from '~/lib/utils'
 
 export const Route = createFileRoute('/charge/$id/')({
@@ -36,7 +36,7 @@ function ImageCard({
 		<Link to={href} className="hover:bg-accent/30 block">
 			<div className={`${rounded} overflow-hidden border shadow-sm`}>
 				<div
-					className={`w-full bg-[length:100%_100%] bg-center ${className || 'h-44'}`}
+					className={`w-full bg-size-[100%_100%] bg-center ${className || 'h-44'}`}
 					style={{ backgroundImage: `url('${src}')` }}
 				/>
 				{title ? (
@@ -134,9 +134,8 @@ function Charge() {
 					{data.map((cat) => {
 						const src = fullUrl(cat.image_path) ?? '/images/demo/fallback.png'
 						return (
-							<CategoryTile cat={cat}>
+							<CategoryTile key={cat.id} cat={cat}>
 								<ImageCard
-									key={cat.id}
 									rounded="rounded-3xl"
 									src={src}
 									title=""

@@ -1,4 +1,4 @@
-import { createRouter as createTanStackRouter } from '@tanstack/react-router'
+import { createRouter } from '@tanstack/react-router'
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
 
 import { DefaultCatchBoundary } from '~/components/default-catch-boundary'
@@ -7,10 +7,10 @@ import { NotFound } from '~/components/not-found'
 import * as TanstackQuery from './integrations/root-provider'
 import { routeTree } from './routeTree.gen'
 
-export function createRouter() {
+export function getRouter() {
 	const rqContext = TanstackQuery.getContext()
 
-	const router = createTanStackRouter({
+	const router = createRouter({
 		routeTree,
 		context: { ...rqContext },
 		defaultPreload: 'intent',
@@ -29,6 +29,6 @@ export function createRouter() {
 
 declare module '@tanstack/react-router' {
 	interface Register {
-		router: ReturnType<typeof createRouter>
+		router: ReturnType<typeof getRouter>
 	}
 }

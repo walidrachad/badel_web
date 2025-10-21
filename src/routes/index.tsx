@@ -5,16 +5,17 @@ import { BottomNavigation } from '~/components/bottom-navigation'
 import { GiftCardsList } from '~/components/gift-cards-list'
 import { NavigationHeader } from '~/components/navigation-header'
 import { RecentActivities } from '~/components/recent-activities'
-
+import { serverEnv } from '~/config/env'
 import { api } from '~/lib/api'
-
 import { getChargePageItems } from '~/lib/api/charge'
 
 export const Route = createFileRoute('/')({
+	ssr: true,
 	loader: async () => {
+		console.log({ env: serverEnv })
 		const featured = await api.get('/featuredProducts')
 
-		console.log(featured)
+		console.log('featured: ', featured)
 	},
 	component: Homepage,
 })

@@ -10,6 +10,24 @@ type Props = {
 	settingsHref?: string
 }
 
+const SideBtn = ({
+	children,
+	to,
+	onClick,
+}: {
+	children: React.ReactNode
+	to: ComponentProps<typeof Link>['to']
+	onClick?: () => void
+}) => (
+	<Link
+		to={to}
+		onClick={onClick}
+		className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-100 text-gray-900 transition hover:bg-gray-200"
+	>
+		{children}
+	</Link>
+)
+
 export default function BottomActionBar({
 	onHomeClick,
 	onOrdersClick,
@@ -18,24 +36,6 @@ export default function BottomActionBar({
 	ordersHref = '/orders',
 	settingsHref = '/settings',
 }: Props) {
-	const SideBtn = ({
-		children,
-		to,
-		onClick,
-	}: {
-		children: React.ReactNode
-		to: ComponentProps<typeof Link>['to']
-		onClick?: () => void
-	}) => (
-		<Link
-			to={to}
-			onClick={onClick}
-			className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-100 text-gray-900 transition hover:bg-gray-200"
-		>
-			{children}
-		</Link>
-	)
-
 	return (
 		<div className="fixed inset-x-0 bottom-0 z-50 border-t bg-white/90 backdrop-blur">
 			<div className="/* respect iOS home indicator */ mx-auto flex max-w-xl items-center justify-between gap-6 px-4 pt-3 pb-[max(14px,env(safe-area-inset-bottom))]">

@@ -1,10 +1,10 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { z } from 'zod'
 
 import AppBar from '~/components/app-bar'
 import PhoneNumberSelect from '~/components/phone-number-select'
-import { getSelectedPhoneId } from '~/lib/phone-storage'
+
 import PaymentMethodCards from './-payment-method-cards'
 
 type Bank = {
@@ -34,10 +34,10 @@ function Checkout() {
 
 	const { gcId, price, name, output, image } = Route.useSearch()
 
-	useEffect(() => {
-		const last = getSelectedPhoneId()
-		if (last) setPhoneId(last)
-	}, [])
+	// useEffect(() => {
+	// 	// const last = getSelectedPhoneId()
+	// 	// if (last) setPhoneId(last)
+	// }, [])
 
 	const navigate = useNavigate()
 
@@ -49,7 +49,7 @@ function Checkout() {
 			{/* Product summary row */}
 			<div className="mb-4 flex items-center gap-3">
 				<div
-					className="h-24 w-40 shrink-0 rounded-2xl bg-[length:100%_100%] p-2"
+					className="h-24 w-40 shrink-0 rounded-2xl bg-size-[100%_100%] p-2"
 					style={{
 						backgroundImage: `url('https://staging.bedelportal.com/${image}')`,
 					}}

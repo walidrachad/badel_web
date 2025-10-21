@@ -1,10 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+
 import type { PhoneItem } from '~/lib/phone-storage'
-import {
-	getSavedPhones,
-	setSavedPhones,
-	setSelectedPhoneId,
-} from '~/lib/phone-storage'
+import { setSavedPhones, setSelectedPhoneId } from '~/lib/phone-storage'
 
 type Item = { id: string; label: string }
 
@@ -19,7 +16,7 @@ function uniqById(arr: Array<Item>) {
 
 export default function PhoneNumberSelect({
 	label = 'Bankily phone number',
-	items,
+	// items,
 	value,
 	onChange,
 	onAddNew,
@@ -40,10 +37,11 @@ export default function PhoneNumberSelect({
 
 	// load phones (merge props + localStorage)
 	const [localItems, setLocalItems] = useState<Array<Item>>([])
-	useEffect(() => {
-		const ls = getSavedPhones()
-		setLocalItems(uniqById([...ls, ...items]))
-	}, [items])
+
+	// useEffect(() => {
+	// 	const ls = getSavedPhones()
+	// 	setLocalItems(uniqById([...ls, ...items]))
+	// }, [items])
 
 	// save to localStorage when list changes
 	useEffect(() => {

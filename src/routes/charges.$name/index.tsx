@@ -2,11 +2,10 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import z from 'zod'
 
-import type { CategoryOrGroup } from '~/lib/types'
-import CategoryTile from '~/components/category-title'
 import AppBar from '~/components/app-bar'
-
+import CategoryTile from '~/components/category-title'
 import { getChargePageItems } from '~/lib/api/charge'
+import type { CategoryOrGroup } from '~/lib/types'
 import { cn } from '~/lib/utils'
 
 const chargeSearchSchema = z.object({
@@ -43,7 +42,7 @@ function ImageCard({
 		<Link to={href} className="hover:bg-accent/30 block">
 			<div className={`${rounded} overflow-hidden border shadow-sm`}>
 				<div
-					className={`w-full bg-[length:100%_100%] bg-center ${className || 'h-44'}`}
+					className={`w-full bg-size-[100%_100%] bg-center ${className || 'h-44'}`}
 					style={{ backgroundImage: `url('${src}')` }}
 				/>
 				{title ? (
@@ -142,9 +141,8 @@ function Charge() {
 					{data.map((cat) => {
 						const src = fullUrl(cat.image_path) ?? '/images/demo/fallback.png'
 						return (
-							<CategoryTile cat={cat}>
+							<CategoryTile key={String(cat.id)} cat={cat}>
 								<ImageCard
-									key={cat.id}
 									rounded="rounded-3xl"
 									src={src}
 									title=""

@@ -1,3 +1,4 @@
+import { TanStackDevtools } from '@tanstack/react-devtools'
 import type { QueryClient } from '@tanstack/react-query'
 import {
 	HeadContent,
@@ -5,14 +6,13 @@ import {
 	Scripts,
 	createRootRouteWithContext,
 } from '@tanstack/react-router'
-import * as React from 'react'
-import { TanStackDevtools } from '@tanstack/react-devtools'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
+import * as React from 'react'
 
 import { DefaultCatchBoundary } from '~/components/default-catch-boundary'
 import { NotFound } from '~/components/not-found'
-import { seo } from '~/lib/seo'
 import TanStackQueryDevtools from '~/integrations/devtools'
+import { seo } from '~/lib/seo'
 
 import globalCss from './globals.css?url'
 
@@ -33,6 +33,8 @@ export const Route = createRootRouteWithContext<{
 		],
 		links: [
 			{ rel: 'stylesheet', href: globalCss },
+			{ rel: 'preconnect', href: 'https://rsms.me/' },
+			{ rel: 'stylesheet', href: 'https://rsms.me/inter/inter.css' },
 			{
 				rel: 'apple-touch-icon',
 				sizes: '180x180',

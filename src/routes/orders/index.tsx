@@ -1,6 +1,6 @@
-import React from 'react'
-import { FilterIcon } from 'lucide-react'
 import { Link, createFileRoute } from '@tanstack/react-router'
+import { FilterIcon } from 'lucide-react'
+import React from 'react'
 
 import AppBar from '~/components/app-bar'
 

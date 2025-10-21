@@ -18,7 +18,7 @@ export function GiftCardsList({ data }: { data?: Array<CategoryOrGroup> }) {
 					)
 				}
 
-				return <div className="col-span-2"></div>
+				return <div key={card.id} className="col-span-2"></div>
 			})}
 		</div>
 	)
@@ -30,7 +30,7 @@ function GiftCard({ giftCard }: { giftCard: Category }) {
 			<img
 				src={giftCard.main_image}
 				alt={`Gift Card - ${giftCard.name}`}
-				className="aspect-[2/1] overflow-hidden rounded-xl hover:rounded-2xl"
+				className="aspect-2/1 overflow-hidden rounded-xl hover:rounded-2xl"
 			/>
 		</Link>
 	)

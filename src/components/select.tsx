@@ -1,5 +1,6 @@
 import { ChevronUpIcon } from 'lucide-react'
-import { useEffect, useId, useState } from 'react'
+import { useId } from 'react'
+
 import { cn } from '~/lib/utils'
 
 type PropsType = {
@@ -27,14 +28,12 @@ export function Select({
 	onValueChange,
 }: PropsType) {
 	const id = useId()
-	const [isOptionSelected, setIsOptionSelected] = useState<boolean>(
-		Boolean(value ?? defaultValue),
-	)
 
-	// keep internal state in sync if parent controls `value`
-	useEffect(() => {
-		if (value !== undefined) setIsOptionSelected(value !== '')
-	}, [value])
+	let isOptionSelected = Boolean(value ?? defaultValue)
+
+	if (value !== undefined) {
+		isOptionSelected = value !== ''
+	}
 
 	return (
 		<div className={cn('space-y-3', className)}>
@@ -58,7 +57,7 @@ export function Select({
 					value={value}
 					defaultValue={value === undefined ? defaultValue || '' : undefined}
 					onChange={(e) => {
-						setIsOptionSelected(true)
+						// setIsOptionSelected(true)
 						onValueChange?.(e.target.value)
 					}}
 					className={cn(
