@@ -13,6 +13,7 @@ import { DefaultCatchBoundary } from '~/components/default-catch-boundary'
 import { NotFound } from '~/components/not-found'
 import TanStackQueryDevtools from '~/integrations/devtools'
 import { seo } from '~/lib/seo'
+import { getLocale } from '~/paraglide/runtime'
 
 import globalCss from './globals.css?url'
 
@@ -76,8 +77,10 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+	const locale = getLocale()
+
 	return (
-		<html>
+		<html lang={locale} dir={locale == 'ar' ? 'rtl' : 'ltr'}>
 			<head>
 				<HeadContent />
 			</head>

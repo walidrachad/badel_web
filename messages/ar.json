@@ -1,0 +1,6 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"example_message": "مرحباً بالعالم {username}",
+	"server_message": "رسالة الخادم {emoji}",
+	"marketplace": "السوق"
+}

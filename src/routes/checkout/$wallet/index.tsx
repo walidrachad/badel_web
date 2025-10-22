@@ -200,7 +200,7 @@ export default function Wallet() {
 				</div>
 			</div>
 			{copied && (
-				<div className="fixed bottom-24 left-1/2 z-50 -translate-x-1/2 transform rounded-lg bg-black px-4 py-2 text-sm text-white shadow-lg">
+				<div className="fixed start-1/2 bottom-24 z-50 -translate-x-1/2 transform rounded-lg bg-black px-4 py-2 text-sm text-white shadow-lg">
 					Copied to clipboard
 				</div>
 			)}

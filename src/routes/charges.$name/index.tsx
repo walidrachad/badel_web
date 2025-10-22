@@ -4,7 +4,6 @@ import z from 'zod'
 
 import AppBar from '~/components/app-bar'
 import CategoryTile from '~/components/category-title'
-import { getChargePageItems } from '~/lib/api/charge'
 import type { CategoryOrGroup } from '~/lib/types'
 import { cn } from '~/lib/utils'
 
@@ -68,9 +67,9 @@ function Charge() {
 		refetch,
 	} = useQuery({
 		queryKey: ['groupCategories', groupId],
-		queryFn: async () => {
+		queryFn: () => {
 			if (cached.length) return cached
-			const items = await getChargePageItems()
+			const items: Array<any> = []
 			const group: any = items.find(
 				(it: any) => it.type === 'group' && it.id === groupId,
 			)
@@ -108,7 +107,7 @@ function Charge() {
 
 			{/* Search with left icon */}
 			<div className="relative w-full">
-				<span className="text-dark-6 absolute inset-y-0 left-0 flex items-center pl-3 dark:text-gray-400">
+				<span className="text-dark-6 absolute inset-y-0 start-0 flex items-center ps-3 dark:text-gray-400">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						className="h-5 w-5"
@@ -129,7 +128,7 @@ function Charge() {
 					placeholder="Search for Gaming..."
 					className={cn(
 						'border-stroke disabled:bg-gray-2 dark:border-dark-3 dark:bg-dark-2 dark:disabled:bg-dark w-full rounded-lg border-[1.5px] bg-transparent transition outline-none focus:border-[#000] disabled:cursor-default data-[active=true]:border-[#000] dark:focus:border-[#000] dark:data-[active=true]:border-[#000]',
-						'text-dark placeholder:text-dark py-3 pr-5 pl-10 dark:text-white',
+						'text-dark placeholder:text-dark py-3 ps-10 pe-5 dark:text-white',
 					)}
 				/>
 			</div>

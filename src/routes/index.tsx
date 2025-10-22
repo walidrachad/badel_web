@@ -7,6 +7,7 @@ import { GiftCardsList } from '~/components/gift-cards-list'
 import { NavigationHeader } from '~/components/navigation-header'
 import { RecentActivities } from '~/components/recent-activities'
 import logger from '~/lib/logger'
+import { m } from '~/paraglide/messages'
 
 export const Route = createFileRoute('/')({
 	loader: async ({ context }) => {
@@ -31,9 +32,9 @@ function Homepage() {
 
 	return (
 		<div className="grid pb-20">
-			<NavigationHeader title="Marketplace" />
+			<NavigationHeader title={m.marketplace()} />
 			<RecentActivities />
-			<GiftCardsList data={posts} />
+			<GiftCardsList data={posts.data} />
 			<BottomNavigation />
 		</div>
 	)

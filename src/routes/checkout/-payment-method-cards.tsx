@@ -159,7 +159,7 @@ function PaymentMethodCard({
 		>
 			{/* check badge when selected */}
 			{selected && (
-				<div className="bg-foreground text-background absolute top-2 right-2 flex h-3 w-3 items-center justify-center rounded-full text-[10px]">
+				<div className="bg-foreground text-background absolute end-2 top-2 flex h-3 w-3 items-center justify-center rounded-full text-[10px]">
 					✓
 				</div>
 			)}

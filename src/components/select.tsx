@@ -46,7 +46,7 @@ export function Select({
 
 			<div className="relative">
 				{prefixIcon && (
-					<div className="absolute top-1/2 left-4 -translate-y-1/2">
+					<div className="absolute start-4 top-1/2 -translate-y-1/2">
 						{prefixIcon}
 					</div>
 				)}
@@ -63,7 +63,7 @@ export function Select({
 					className={cn(
 						'border-stroke focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary [&>option]:text-dark-5 dark:[&>option]:text-dark-6 w-full appearance-none rounded-lg border bg-transparent px-5.5 py-3 transition outline-none',
 						(isOptionSelected || value) && 'text-dark dark:text-white',
-						prefixIcon && 'pl-11.5',
+						prefixIcon && 'ps-11.5',
 					)}
 				>
 					{placeholder && (
@@ -79,7 +79,7 @@ export function Select({
 					))}
 				</select>
 
-				<ChevronUpIcon className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 rotate-180" />
+				<ChevronUpIcon className="pointer-events-none absolute end-4 top-1/2 -translate-y-1/2 rotate-180" />
 			</div>
 		</div>
 	)

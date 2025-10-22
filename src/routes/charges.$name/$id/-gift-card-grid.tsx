@@ -64,7 +64,7 @@ export default function GiftcardGrid({
 						</div>
 
 						{selected && (
-							<span className="pointer-events-none absolute -top-[-8px] -right-[-8px] inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#CF4F00]">
+							<span className="pointer-events-none absolute -end-[-8px] -top-[-8px] inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#CF4F00]">
 								<svg width="12" height="12" viewBox="0 0 24 24" fill="none">
 									<path
 										d="M6 12l4 4 8-8"

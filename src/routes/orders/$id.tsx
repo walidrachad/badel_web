@@ -265,7 +265,7 @@ function AppleCardThumb() {
 			style={{ background: 'linear-gradient(135deg,#0a84ff 0%,#0041c4 100%)' }}
 		>
 			<div className="relative h-full w-full rounded-xl">
-				<div className="absolute top-1/2 left-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/95" />
+				<div className="absolute start-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/95" />
 				<div className="absolute inset-x-2 bottom-1 flex items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 text-[10px] shadow-sm">
 					<span>🎵</span>
 					<span>🤖</span>

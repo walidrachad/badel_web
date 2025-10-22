@@ -25,7 +25,7 @@ const buttonVariants = cva(
 					'bg-destructive-muted text-destructive-foreground hover:bg-destructive-muted/90 border-border-destructive focus-visible:ring-border-destructive/50 border-2',
 			},
 			size: {
-				default: 'h-14 px-5 py-3',
+				default: 'h-11 px-5 py-3',
 				icon: 'size-13 rounded-full',
 			},
 		},

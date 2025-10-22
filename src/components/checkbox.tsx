@@ -44,11 +44,11 @@ export function Checkbox({
 
 					<div
 						className={cn(
-							'border-dark-5 peer-checked:border-primary dark:border-dark-6 mr-2 flex size-5 items-center justify-center rounded border peer-checked:[&>*]:block',
+							'border-dark-5 peer-checked:border-primary dark:border-dark-6 me-2 flex size-5 items-center justify-center rounded border peer-checked:[&>*]:block',
 							withBg
 								? 'peer-checked:bg-primary [&>*]:text-white'
 								: 'peer-checked:bg-gray-2 dark:peer-checked:bg-transparent',
-							minimal && 'border-stroke dark:border-dark-3 mr-3',
+							minimal && 'border-stroke dark:border-dark-3 me-3',
 							radius === 'md' && 'rounded-md',
 						)}
 					>
