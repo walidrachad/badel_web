@@ -1,10 +1,7 @@
 import ky from 'ky'
 
 import { serverEnv } from '~/config/env'
-
-import logger from '../logger'
-
-export const BACKEND_BASEURL = import.meta.env.VITE_BACKEND_BASEURL as string
+import { logMessage } from '~/lib/logger'
 
 export const api = ky.create({
 	prefixUrl: serverEnv.BACKEND_BASEURL,
@@ -18,7 +15,7 @@ export const api = ky.create({
 			(request, _, response) => {
 				const pathname = new URL(request.url).pathname
 
-				logger.log(
+				logMessage(
 					`EXTERNAL API Request --> ${request.method} ${pathname} ${response.status}`,
 				)
 			},
@@ -27,6 +24,6 @@ export const api = ky.create({
 	retry: {
 		limit: 1,
 		statusCodes: [401],
-		methods: ['get', 'post', 'head', 'delete', 'options', 'trace'],
+		methods: ['get', 'post', 'put', 'patch', 'delete'],
 	},
 })

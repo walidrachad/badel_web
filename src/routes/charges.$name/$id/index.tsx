@@ -6,7 +6,6 @@ import { useMemo, useState } from 'react'
 import AppBar from '~/components/app-bar'
 import BottomSheet from '~/components/bottom-sheet'
 import { Select } from '~/components/select'
-import { getChargePageItems } from '~/lib/api/charge'
 import {
 	codeToFlagEmoji,
 	codeToName,
@@ -52,7 +51,7 @@ function CategoryPage() {
 		queryKey: ['category', id],
 		queryFn: async () => {
 			if (cached) return cached
-			const items = await getChargePageItems()
+			const items = await []
 			return flattenCategories(items).find((c) => c.id === Number(id))
 		},
 		initialData: cached ?? null,
@@ -129,10 +128,10 @@ function CategoryPage() {
 			</AppBar>
 			{/* Hero banner from category image */}
 			<div
-				className="mt-2 rounded-3xl bg-[length:100%_100%] p-4 sm:p-5"
+				className="mt-2 rounded-3xl bg-size-[100%_100%] p-4 sm:p-5"
 				style={{ backgroundImage: `url('${heroSrc}')` }}
 			>
-				<div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl" />
+				<div className="relative aspect-video w-full overflow-hidden rounded-2xl" />
 			</div>
 			{/* Description */}
 			{(cat.description || cat.description_fr || cat.description_ar) && (

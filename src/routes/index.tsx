@@ -1,32 +1,31 @@
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 
+import { chargesQueryOptions } from '~/api/charge'
 import { BottomNavigation } from '~/components/bottom-navigation'
 import { GiftCardsList } from '~/components/gift-cards-list'
 import { NavigationHeader } from '~/components/navigation-header'
 import { RecentActivities } from '~/components/recent-activities'
-import { serverEnv } from '~/config/env'
-import { api } from '~/lib/api'
-import { getChargePageItems } from '~/lib/api/charge'
+import logger from '~/lib/logger'
 
 export const Route = createFileRoute('/')({
-	ssr: true,
-	loader: async () => {
-		console.log({ env: serverEnv })
-		const featured = await api.get('/featuredProducts')
-
-		console.log('featured: ', featured)
+	loader: async ({ context }) => {
+		await context.queryClient.ensureQueryData(chargesQueryOptions)
 	},
+	head: () => ({
+		meta: [{ title: 'Charges | Bedel Charges' }],
+	}),
 	component: Homepage,
 })
 
 function Homepage() {
-	const { data, isLoading, isError, refetch } = useQuery({
-		queryKey: ['todos'],
-		queryFn: getChargePageItems,
-	})
+	const {
+		data: posts,
+		isError,
+		refetch,
+	} = useSuspenseQuery(chargesQueryOptions)
 
-	if (isLoading) return <Loading />
+	logger.log({ posts })
 
 	if (isError) return <Error refetch={refetch} />
 
@@ -34,16 +33,8 @@ function Homepage() {
 		<div className="grid pb-20">
 			<NavigationHeader title="Marketplace" />
 			<RecentActivities />
-			<GiftCardsList data={data} />
+			<GiftCardsList data={posts} />
 			<BottomNavigation />
-		</div>
-	)
-}
-
-function Loading() {
-	return (
-		<div className="mx-auto flex w-full max-w-xl items-center justify-center py-20">
-			<div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600" />
 		</div>
 	)
 }

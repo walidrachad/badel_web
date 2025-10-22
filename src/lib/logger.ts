@@ -1,3 +1,5 @@
+import { createIsomorphicFn } from '@tanstack/react-start'
+
 class Logger {
 	private isDev: boolean
 
@@ -37,3 +39,7 @@ class Logger {
 // Export a singleton instance
 const logger = new Logger()
 export default logger
+
+export const logMessage = createIsomorphicFn()
+	.server((msg) => console.log(`[SERVER]: ${msg}`))
+	.client((msg) => console.log(`[CLIENT]: ${msg}`))
