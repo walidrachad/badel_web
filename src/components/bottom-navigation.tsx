@@ -1,39 +1,43 @@
-import { Link } from '@tanstack/react-router'
+import { GearSixIcon, HouseIcon, PackageIcon } from '@phosphor-icons/react'
+import { Link, useMatch } from '@tanstack/react-router'
+
+import { m } from '~/paraglide/messages'
 
 import { Button } from './ui/button'
 
 export function BottomNavigation() {
+	const matchHome = useMatch({ from: '/', shouldThrow: false })
+
 	return (
-		<div className="bg-surface border-border-subtle fixed inset-x-0 bottom-0 z-50 container flex justify-center gap-4 border-t px-4 pt-2.5 pb-[max(14px,env(safe-area-inset-bottom))]">
-			<Button asChild size="icon" variant="secondary">
-				<Link to="/">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-						<path d="M224,120v96a8,8,0,0,1-8,8H160a8,8,0,0,1-8-8V164a4,4,0,0,0-4-4H108a4,4,0,0,0-4,4v52a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V120a16,16,0,0,1,4.69-11.31l80-80a16,16,0,0,1,22.62,0l80,80A16,16,0,0,1,224,120Z"></path>
-					</svg>
-				</Link>
-			</Button>
+		<aside className="border-border-subtle bg-surface fixed inset-x-0 bottom-0 z-9 border-t px-4 pt-3 pb-[max(--spacing(4),env(safe-area-inset-bottom))]">
+			<nav className="container">
+				<ul className="flex items-center justify-center gap-4">
+					<li>
+						<Button asChild size="icon" variant="secondary">
+							<Link to="/">
+								<HouseIcon weight={matchHome ? 'fill' : 'bold'} />
+							</Link>
+						</Button>
+					</li>
 
-			<Link
-				to="/orders"
-				className="bg-accent border-border-accent/50 text-inverted-foreground flex items-center gap-2 rounded-full px-5 py-3.5 shadow-[0px_0px_14px_1px_rgba(207,79,0,0.3)] transition hover:opacity-95 [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-6"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 256 256"
-					fill="currentColor"
-				>
-					<path d="M225.6,62.64l-88-48.17a19.91,19.91,0,0,0-19.2,0l-88,48.17A20,20,0,0,0,20,80.19v95.62a20,20,0,0,0,10.4,17.55l88,48.17a19.89,19.89,0,0,0,19.2,0l88-48.17A20,20,0,0,0,236,175.81V80.19A20,20,0,0,0,225.6,62.64ZM128,36.57,200,76,178.57,87.73l-72-39.42Zm0,78.83L56,76,81.56,62l72,39.41ZM44,96.79l72,39.4v76.67L44,173.44Zm96,116.07V136.19l24-13.13V152a12,12,0,0,0,24,0V109.92l24-13.13v76.65Z"></path>
-				</svg>
-				<span className="text-label-medium">My orders</span>
-			</Link>
+					<li>
+						<Button asChild className="rounded-full">
+							<Link to="/orders">
+								<PackageIcon weight="bold" />
+								{m.my_orders()}
+							</Link>
+						</Button>
+					</li>
 
-			<Button asChild size="icon" variant="secondary">
-				<Link to="/">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-						<path d="M128,76a52,52,0,1,0,52,52A52.06,52.06,0,0,0,128,76Zm0,80a28,28,0,1,1,28-28A28,28,0,0,1,128,156Zm113.86-49.57A12,12,0,0,0,236,98.34L208.21,82.49l-.11-31.31a12,12,0,0,0-4.25-9.12,116,116,0,0,0-38-21.41,12,12,0,0,0-9.68.89L128,37.27,99.83,21.53a12,12,0,0,0-9.7-.9,116.06,116.06,0,0,0-38,21.47,12,12,0,0,0-4.24,9.1l-.14,31.34L20,98.35a12,12,0,0,0-5.85,8.11,110.7,110.7,0,0,0,0,43.11A12,12,0,0,0,20,157.66l27.82,15.85.11,31.31a12,12,0,0,0,4.25,9.12,116,116,0,0,0,38,21.41,12,12,0,0,0,9.68-.89L128,218.73l28.14,15.74a12,12,0,0,0,9.7.9,116.06,116.06,0,0,0,38-21.47,12,12,0,0,0,4.24-9.1l.14-31.34,27.81-15.81a12,12,0,0,0,5.85-8.11A110.7,110.7,0,0,0,241.86,106.43Zm-22.63,33.18-26.88,15.28a11.94,11.94,0,0,0-4.55,4.59c-.54,1-1.11,1.93-1.7,2.88a12,12,0,0,0-1.83,6.31L184.13,199a91.83,91.83,0,0,1-21.07,11.87l-27.15-15.19a12,12,0,0,0-5.86-1.53h-.29c-1.14,0-2.3,0-3.44,0a12.08,12.08,0,0,0-6.14,1.51L93,210.82A92.27,92.27,0,0,1,71.88,199l-.11-30.24a12,12,0,0,0-1.83-6.32c-.58-.94-1.16-1.91-1.7-2.88A11.92,11.92,0,0,0,63.7,155L36.8,139.63a86.53,86.53,0,0,1,0-23.24l26.88-15.28a12,12,0,0,0,4.55-4.58c.54-1,1.11-1.94,1.7-2.89a12,12,0,0,0,1.83-6.31L71.87,57A91.83,91.83,0,0,1,92.94,45.17l27.15,15.19a11.92,11.92,0,0,0,6.15,1.52c1.14,0,2.3,0,3.44,0a12.08,12.08,0,0,0,6.14-1.51L163,45.18A92.27,92.27,0,0,1,184.12,57l.11,30.24a12,12,0,0,0,1.83,6.32c.58.94,1.16,1.91,1.7,2.88A11.92,11.92,0,0,0,192.3,101l26.9,15.33A86.53,86.53,0,0,1,219.23,139.61Z"></path>
-					</svg>
-				</Link>
-			</Button>
-		</div>
+					<li>
+						<Button asChild size="icon" variant="secondary">
+							<Link to=".">
+								<GearSixIcon weight="bold" />
+							</Link>
+						</Button>
+					</li>
+				</ul>
+			</nav>
+		</aside>
 	)
 }

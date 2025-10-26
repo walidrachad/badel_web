@@ -107,9 +107,13 @@
 	--color-border-subtle: var(--gray-3);
 	--color-border-emphasis: var(--gray-12);
 	--color-border-accent: var(--accent-11);
+	--color-border-accent-muted: var(--accent-5);
 	--color-border-success: var(--green-11);
+	--color-border-success-muted: var(--green-5);
 	--color-border-warning: var(--amber-11);
+	--color-border-warning-muted: var(--amber-5);
 	--color-border-destructive: var(--red-11);
+	--color-border-destructive-muted: var(--red-5);
 }
 
 @theme {
@@ -214,6 +218,6 @@
 		@apply border-border outline-border-emphasis/50;
 	}
 	body {
-		@apply bg-surface text-foreground font-inter;
+		@apply bg-surface text-foreground font-inter min-h-full;
 	}
 }

@@ -4,9 +4,11 @@ import { createFileRoute } from '@tanstack/react-router'
 import { chargesQueryOptions } from '~/api/charge'
 import { BottomNavigation } from '~/components/bottom-navigation'
 import { GiftCardsList } from '~/components/gift-cards-list'
-import { NavigationHeader } from '~/components/navigation-header'
+import {
+	NavigationHeader,
+	NavigationHeaderTitle,
+} from '~/components/navigation-header'
 import { RecentActivities } from '~/components/recent-activities'
-import logger from '~/lib/logger'
 import { m } from '~/paraglide/messages'
 
 export const Route = createFileRoute('/')({
@@ -17,24 +19,28 @@ export const Route = createFileRoute('/')({
 		meta: [{ title: 'Charges | Bedel Charges' }],
 	}),
 	component: Homepage,
+	errorComponent: ({ reset }) => <Error refetch={reset} />,
 })
 
 function Homepage() {
 	const {
-		data: posts,
+		data: charges,
 		isError,
 		refetch,
 	} = useSuspenseQuery(chargesQueryOptions)
 
-	logger.log({ posts })
-
 	if (isError) return <Error refetch={refetch} />
 
 	return (
-		<div className="grid pb-20">
-			<NavigationHeader title={m.marketplace()} />
+		<div className="pb-24">
+			<NavigationHeader>
+				<NavigationHeaderTitle>{m.marketplace()}</NavigationHeaderTitle>
+			</NavigationHeader>
+
 			<RecentActivities />
-			<GiftCardsList data={posts.data} />
+
+			<GiftCardsList charges={charges} />
+
 			<BottomNavigation />
 		</div>
 	)

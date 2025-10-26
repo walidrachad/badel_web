@@ -2,5 +2,6 @@
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 	"example_message": "Hello world {username}",
 	"server_message": "Server message {emoji}",
-	"marketplace": "Marketplace"
+	"marketplace": "Marketplace",
+	"my_orders": "My Orders"
 }

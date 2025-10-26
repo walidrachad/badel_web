@@ -1,51 +1,68 @@
-import type { LucideIcon } from 'lucide-react'
+import type { ComponentProps } from 'react'
+
+import { cn } from '~/lib/utils'
 
 import { Button } from './ui/button'
 
 export function NavigationHeader({
-	title,
-	leadingAction,
-	trailingAction,
-}: {
-	title: string
-	leadingAction?: {
-		icon: LucideIcon
-		onClick: () => void | Promise<void>
-	}
-	trailingAction?: {
-		icon: LucideIcon
-		onClick: () => void | Promise<void>
-	}
+	className,
+	...props
+}: ComponentProps<'div'>) {
+	return (
+		<header
+			data-slot="navigation-header"
+			className="bg-surface border-border-subtle sticky top-0 z-8 border-b"
+		>
+			<div
+				className={cn(
+					'relative container flex h-14 items-center justify-between',
+				)}
+				{...props}
+			/>
+		</header>
+	)
+}
+
+export function NavigationHeaderTitle({
+	className,
+	...props
+}: ComponentProps<'h1'>) {
+	return (
+		<h1
+			data-slot="navigation-header-title"
+			className={cn(
+				'text-label-xlarge absolute inset-x-0 flex-1 text-center',
+				// '[[data-slot=navigation-header-action]+&]:-ms-10',
+				// '[&+[data-slot=navigation-header-action]]:-me-10',
+				className,
+			)}
+			{...props}
+		/>
+	)
+}
+
+export function NavigationHeaderAction({
+	className,
+	inverted = false,
+	size = 'icon',
+	position = 'start',
+	...props
+}: ComponentProps<typeof Button> & {
+	position?: 'start' | 'end'
+	inverted?: boolean
 }) {
 	return (
-		<div className="bg-surface border-border-subtle sticky top-0 z-50 container flex h-14 items-center justify-between border-b">
-			{leadingAction ? (
-				<Button
-					size="icon"
-					variant="secondary"
-					className="size-10"
-					onClick={leadingAction.onClick}
-				>
-					<leadingAction.icon className="size-5" />
-				</Button>
-			) : (
-				<div className="size-10" />
+		<Button
+			data-slot="navigation-header-action"
+			size={size}
+			variant="secondary"
+			className={cn(
+				size === 'icon' && 'size-10 [&_svg]:size-5!',
+				position === 'end' && 'ms-auto',
+				inverted && 'bg-inverted/20',
+				className,
 			)}
-
-			<h1 className="text-label-xlarge flex-1 text-center">{title}</h1>
-
-			{trailingAction ? (
-				<Button
-					size="icon"
-					variant="secondary"
-					className="size-10"
-					onClick={trailingAction.onClick}
-				>
-					<trailingAction.icon className="size-5" />
-				</Button>
-			) : (
-				<div className="size-10" />
-			)}
-		</div>
+			{...props}
+		/>
 	)
 }
